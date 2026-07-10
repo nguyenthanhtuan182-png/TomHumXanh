@@ -1,0 +1,106 @@
+body{
+
+    font-family: Arial;
+
+    background:#f4f6f9;
+
+    padding:20px;
+
+}
+
+h1{
+
+    text-align:center;
+
+    color:#0066cc;
+
+}
+
+.card{
+
+    background:white;
+
+    padding:15px;
+
+    margin:15px;
+
+    border-radius:10px;
+
+    box-shadow:0 2px 5px gray;
+
+}
+
+.card p{
+
+    font-size:28px;
+
+    font-weight:bold;
+
+    color:#0066cc;
+
+}
+
+button{
+
+    width:100%;
+
+    padding:15px;
+
+    font-size:18px;
+
+    border:none;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+}
+
+#ketqua{
+
+    margin-top:20px;
+
+    padding:15px;
+
+    background:white;
+
+    border-radius:10px;
+
+    box-shadow:0 2px 5px gray;
+
+    text-align:center;
+
+    font-size:22px;
+
+    font-weight:bold;
+
+}
+#trangthai{
+
+    text-align:center;
+
+    margin:20px;
+
+}
+
+#den{
+
+    width:80px;
+
+    height:80px;
+
+    border-radius:50%;
+
+    background:gray;
+
+    margin:auto;
+
+    box-shadow:0 0 20px gray;
+
+}
+
+#textTrangThai{
+
+    margin-top:10px;
+
+}
