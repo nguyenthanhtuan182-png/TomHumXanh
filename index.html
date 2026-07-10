@@ -1,54 +1,121 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 
 <head>
 
-<title>Tôm hùm AI</title>
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>TomHumXanh</title>
 
 <link rel="stylesheet" href="style.css">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </head>
 
 <body>
 
-<h1>HỆ THỐNG GIÁM SÁT TÔM HÙM AI</h1>
+<div class="logo">
+🦞 TOMHUMXANH
+</div>
+
+<div class="subtitle">
+Hệ thống AI giám sát môi trường nuôi tôm hùm
+</div>
 
 <div id="trangthai">
-    <div id="den"></div>
-    <h2 id="textTrangThai">CHƯA ĐÁNH GIÁ</h2>
+
+<div id="den"></div>
+
+<h2 id="textTrangThai">
+CHƯA ĐÁNH GIÁ
+</h2>
+
+</div>
+
+<div class="grid">
+
+<div class="card">
+
+<h3>Nhiệt độ nước</h3>
+
+<p id="nhietdo" class="temp">
+28°C
+</p>
+
 </div>
 
 <div class="card">
-    <h3>Nhiệt độ nước</h3>
-    <p id="nhietdo">28°C</p>
+
+<h3>Độ đục</h3>
+
+<p id="doduc" class="turbidity">
+45 NTU
+</p>
+
 </div>
 
 <div class="card">
-    <h3>Độ đục</h3>
-    <p id="doduc">45 NTU</p>
+
+<h3>Độ mặn</h3>
+
+<p id="doman" class="salinity">
+32‰
+</p>
+
 </div>
 
 <div class="card">
-    <h3>Độ mặn</h3>
-    <p id="doman">32‰</p>
+
+<h3>Chỉ số rủi ro</h3>
+
+<p id="risk" class="risk">
+100
+</p>
+
 </div>
 
-<div class="card">
-    <h3>Risk Index</h3>
-    <p id="risk">100</p>
 </div>
 
 <div id="thanhNen">
-    <div id="thanhRisk"></div>
+
+<div id="thanhRisk"></div>
+
 </div>
 
-<br>
-
 <button onclick="phanTich()">
-    Phân tích môi trường
+
+Phân tích môi trường
+
 </button>
 
-<div id="ketqua"></div>
+<div id="ketqua">
+
+Chưa có dữ liệu
+
+</div>
+
+<div class="card">
+
+<h3>Khuyến nghị AI</h3>
+
+<div id="khuyennghi">
+
+Chưa có dữ liệu
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h3>Biểu đồ Chỉ số rủi ro</h3>
+
+<canvas id="myChart"></canvas>
+
+</div>
 
 <script src="script.js"></script>
 

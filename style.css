@@ -1,106 +1,243 @@
 body{
 
-    font-family: Arial;
+font-family:Arial,sans-serif;
 
-    background:#f4f6f9;
+background:#f4f6f9;
 
-    padding:20px;
+margin:0;
 
-}
-
-h1{
-
-    text-align:center;
-
-    color:#0066cc;
+padding:20px;
 
 }
 
-.card{
+.logo{
 
-    background:white;
+text-align:center;
 
-    padding:15px;
+font-size:38px;
 
-    margin:15px;
+font-weight:bold;
 
-    border-radius:10px;
-
-    box-shadow:0 2px 5px gray;
+color:#0066cc;
 
 }
 
-.card p{
+.subtitle{
 
-    font-size:28px;
+text-align:center;
 
-    font-weight:bold;
+color:#666;
 
-    color:#0066cc;
-
-}
-
-button{
-
-    width:100%;
-
-    padding:15px;
-
-    font-size:18px;
-
-    border:none;
-
-    border-radius:8px;
-
-    cursor:pointer;
+margin-bottom:20px;
 
 }
 
-#ketqua{
-
-    margin-top:20px;
-
-    padding:15px;
-
-    background:white;
-
-    border-radius:10px;
-
-    box-shadow:0 2px 5px gray;
-
-    text-align:center;
-
-    font-size:22px;
-
-    font-weight:bold;
-
-}
 #trangthai{
 
-    text-align:center;
+text-align:center;
 
-    margin:20px;
+margin-bottom:20px;
 
 }
 
 #den{
 
-    width:80px;
+width:50px;
 
-    height:80px;
+height:50px;
 
-    border-radius:50%;
+border-radius:50%;
 
-    background:gray;
+background:gray;
 
-    margin:auto;
+margin:auto;
 
-    box-shadow:0 0 20px gray;
+box-shadow:0 0 15px gray;
 
 }
 
 #textTrangThai{
 
-    margin-top:10px;
+font-size:26px;
+
+margin-top:10px;
+
+}
+
+.grid{
+
+display:grid;
+
+grid-template-columns:1fr 1fr;
+
+gap:15px;
+
+margin-bottom:20px;
+
+}
+
+.card{
+
+background:white;
+
+padding:15px;
+
+border-radius:12px;
+
+box-shadow:0 2px 8px rgba(0,0,0,0.1);
+
+}
+
+.card h3{
+
+font-size:16px;
+
+color:#666;
+
+margin-bottom:10px;
+
+}
+
+.card p{
+
+font-size:22px;
+
+font-weight:600;
+
+margin:0;
+
+}
+
+.temp{
+
+color:#e67e22;
+
+}
+
+.turbidity{
+
+color:#3498db;
+
+}
+
+.salinity{
+
+color:#8e44ad;
+
+}
+
+.risk{
+
+color:#e74c3c;
+
+}
+
+#thanhNen{
+
+width:100%;
+
+height:25px;
+
+background:#ddd;
+
+border-radius:20px;
+
+overflow:hidden;
+
+margin-bottom:20px;
+
+}
+
+#thanhRisk{
+
+width:100%;
+
+height:100%;
+
+background:limegreen;
+
+transition:0.5s;
+
+}
+
+button{
+
+width:100%;
+
+padding:15px;
+
+font-size:18px;
+
+background:#0066cc;
+
+color:white;
+
+border:none;
+
+border-radius:10px;
+
+cursor:pointer;
+
+}
+
+button:hover{
+
+opacity:0.9;
+
+}
+
+#ketqua{
+
+margin-top:15px;
+
+background:white;
+
+padding:15px;
+
+border-radius:12px;
+
+text-align:center;
+
+font-size:22px;
+
+font-weight:bold;
+
+box-shadow:0 2px 8px rgba(0,0,0,0.1);
+
+}
+
+#khuyennghi{
+
+background:#f7f9fc;
+
+padding:15px;
+
+border-left:5px solid #0066cc;
+
+border-radius:10px;
+
+font-size:18px;
+
+font-weight:normal;
+
+line-height:1.8;
+
+color:#333;
+
+}
+
+canvas{
+
+max-height:350px;
+
+}
+
+@media(max-width:700px){
+
+.grid{
+
+grid-template-columns:1fr;
+
+}
 
 }
