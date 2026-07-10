@@ -1,201 +1,350 @@
+// ===============================
+// TÔM HÙM XANH AI
+// script.js
+// ===============================
+
+// Lưu lịch sử chỉ số Risk
 let riskHistory = [];
 
-let chart;
+// Lưu dữ liệu các lần đo
+let dataHistory = [];
 
+// Đối tượng biểu đồ
+let chart = null;
+
+// ===============================
+// Khởi tạo khi tải trang
+// ===============================
 window.onload = function () {
 
-const ctx =
-document.getElementById('myChart');
+    // Hiển thị Trang chủ mặc định
+    showPage("home");
 
-chart = new Chart(ctx, {
+    // Khởi tạo biểu đồ
+    const ctx = document.getElementById("myChart");
 
-type: 'line',
+    chart = new Chart(ctx, {
 
-data: {
+        type: "line",
 
-labels: [],
+        data: {
 
-datasets: [{
+            labels: [],
 
-label: 'Chỉ số rủi ro',
+            datasets: [
 
-data: []
+                {
 
-}]
+                    label: "Chỉ số rủi ro",
 
-},
+                    data: [],
 
-options: {
+                    borderColor: "#0077cc",
 
-responsive: true
+                    backgroundColor: "rgba(0,119,204,0.2)",
 
-}
+                    borderWidth: 3,
 
-});
+                    fill: true,
+
+                    tension: 0.3,
+
+                    pointRadius: 4
+
+                }
+
+            ]
+
+        },
+
+        options: {
+
+            responsive: true,
+
+            maintainAspectRatio: true,
+
+            scales: {
+
+                y: {
+
+                    min: 0,
+
+                    max: 100
+
+                }
+
+            }
+
+        }
+
+    });
 
 };
 
+// ===============================
+// Chuyển trang
+// ===============================
+function showPage(page) {
+
+    document.getElementById("homePage").style.display = "none";
+    document.getElementById("aboutPage").style.display = "none";
+    document.getElementById("mapPage").style.display = "none";
+    document.getElementById("dataPage").style.display = "none";
+
+    switch (page) {
+
+        case "home":
+            document.getElementById("homePage").style.display = "block";
+            break;
+
+        case "about":
+            document.getElementById("aboutPage").style.display = "block";
+            break;
+
+        case "map":
+            document.getElementById("mapPage").style.display = "block";
+            break;
+
+        case "data":
+            document.getElementById("dataPage").style.display = "block";
+            break;
+
+    }
+
+}
+
+// ===============================
+// Phân tích AI
+// ===============================
 function phanTich() {
 
-let nhietDo =
-Math.floor(Math.random() * 10) + 25;
+    // Sinh dữ liệu giả lập
 
-let doDuc =
-Math.floor(Math.random() * 100);
+    let nhietDo = Math.floor(Math.random() * 10) + 25;
 
-let doMan =
-Math.floor(Math.random() * 15) + 20;
+    let doDuc = Math.floor(Math.random() * 100);
 
-document.getElementById("nhietdo").innerHTML =
-nhietDo + "°C";
+    let doMan = Math.floor(Math.random() * 15) + 20;
 
-document.getElementById("doduc").innerHTML =
-doDuc + " NTU";
+    // Hiển thị
 
-document.getElementById("doman").innerHTML =
-doMan + "‰";
+    document.getElementById("nhietdo").innerHTML = nhietDo + "°C";
 
-let diemNhietDo = 100;
-let diemDoDuc = 100;
-let diemDoMan = 100;
+    document.getElementById("doduc").innerHTML = doDuc + " NTU";
 
-if (nhietDo > 32) {
+    document.getElementById("doman").innerHTML = doMan + "‰";
 
-diemNhietDo = 30;
+    // -------------------------
+
+    let diemNhietDo = 100;
+    let diemDoDuc = 100;
+    let diemDoMan = 100;
+
+    // Nhiệt độ
+
+    if (nhietDo > 32) {
+
+        diemNhietDo = 30;
+
+    } else if (nhietDo > 30) {
+
+        diemNhietDo = 70;
+
+    }
+
+    // Độ đục
+
+    if (doDuc > 80) {
+
+        diemDoDuc = 20;
+
+    } else if (doDuc > 60) {
+
+        diemDoDuc = 60;
+
+    }
+
+    // Độ mặn
+
+    if (doMan < 24) {
+
+        diemDoMan = 20;
+
+    } else if (doMan < 28) {
+
+        diemDoMan = 60;
+
+    }
+
+    // -------------------------
+
+    let risk = Math.round(
+
+        0.4 * diemNhietDo +
+
+        0.3 * diemDoDuc +
+
+        0.3 * diemDoMan
+
+    );
+
+    // -------------------------
+
+    document.getElementById("risk").innerHTML = risk;
+
+    document.getElementById("thanhRisk").style.width = risk + "%";
+
+    // -------------------------
+    // Lưu lịch sử
+    // -------------------------
+
+    riskHistory.push(risk);
+
+    dataHistory.push({
+
+        nhietDo: nhietDo,
+
+        doDuc: doDuc,
+
+        doMan: doMan,
+
+        risk: risk
+
+    });
+
+    if (riskHistory.length > 20) {
+
+        riskHistory.shift();
+
+    }
+
+    if (dataHistory.length > 20) {
+
+        dataHistory.shift();
+
+    }
+
+    // -------------------------
+    // Cập nhật biểu đồ
+    // -------------------------
+
+    chart.data.labels = riskHistory.map((item, index) => index + 1);
+
+    chart.data.datasets[0].data = riskHistory;
+
+    chart.update();
+
+    // -------------------------
+    // Cập nhật bảng dữ liệu
+    // -------------------------
+
+    capNhatBang();
+
+    // -------------------------
+    // AI
+    // -------------------------
+
+    let ketQua = "";
+
+    let khuyenNghi = "";
+
+    if (risk < 60) {
+
+        ketQua = "🔴 NGUY HIỂM";
+
+        document.getElementById("den").style.background = "red";
+
+        document.getElementById("den").style.boxShadow = "0 0 25px red";
+
+        document.getElementById("textTrangThai").innerHTML = "NGUY HIỂM";
+
+        document.getElementById("thanhRisk").style.background = "red";
+
+        khuyenNghi =
+
+            "• Nâng lồng nuôi khoảng 0,5 m.<br>" +
+
+            "• Giảm khoảng 20% lượng thức ăn.<br>" +
+
+            "• Theo dõi lại sau 6 giờ.<br>" +
+
+            "• Kiểm tra nguồn nước.";
+
+    }
+
+    else if (risk < 80) {
+
+        ketQua = "🟡 CẢNH BÁO";
+
+        document.getElementById("den").style.background = "gold";
+
+        document.getElementById("den").style.boxShadow = "0 0 25px gold";
+
+        document.getElementById("textTrangThai").innerHTML = "CẢNH BÁO";
+
+        document.getElementById("thanhRisk").style.background = "gold";
+
+        khuyenNghi =
+
+            "• Theo dõi độ đục.<br>" +
+
+            "• Kiểm tra nguồn nước.<br>" +
+
+            "• Đo lại sau 3 giờ.";
+
+    }
+
+    else {
+
+        ketQua = "🟢 AN TOÀN";
+
+        document.getElementById("den").style.background = "limegreen";
+
+        document.getElementById("den").style.boxShadow = "0 0 25px limegreen";
+
+        document.getElementById("textTrangThai").innerHTML = "AN TOÀN";
+
+        document.getElementById("thanhRisk").style.background = "limegreen";
+
+        khuyenNghi =
+
+            "• Môi trường ổn định.<br>" +
+
+            "• Tiếp tục nuôi bình thường.<br>" +
+
+            "• Theo dõi định kỳ.";
+
+    }
+
+    document.getElementById("ketqua").innerHTML = ketQua;
+
+    document.getElementById("khuyennghi").innerHTML = khuyenNghi;
 
 }
-else if (nhietDo > 30) {
 
-diemNhietDo = 70;
+// ===============================
+// Cập nhật bảng dữ liệu
+// ===============================
+function capNhatBang() {
 
-}
+    const table = document.getElementById("tableData");
 
-if (doDuc > 80) {
+    table.innerHTML = "";
 
-diemDoDuc = 20;
+    dataHistory.forEach((item, index) => {
 
-}
-else if (doDuc > 60) {
+        let row = table.insertRow();
 
-diemDoDuc = 60;
+        row.insertCell(0).innerHTML = index + 1;
 
-}
+        row.insertCell(1).innerHTML = item.nhietDo + "°C";
 
-if (doMan < 24) {
+        row.insertCell(2).innerHTML = item.doDuc + " NTU";
 
-diemDoMan = 20;
+        row.insertCell(3).innerHTML = item.doMan + "‰";
 
-}
-else if (doMan < 28) {
+        row.insertCell(4).innerHTML = item.risk;
 
-diemDoMan = 60;
-
-}
-
-let risk =
-
-0.4 * diemNhietDo +
-0.3 * diemDoDuc +
-0.3 * diemDoMan;
-
-risk = Math.round(risk);
-
-document.getElementById("risk").innerHTML =
-risk;
-
-document.getElementById("thanhRisk").style.width =
-risk + "%";
-
-riskHistory.push(risk);
-
-if (riskHistory.length > 20) {
-
-riskHistory.shift();
-
-}
-
-chart.data.labels =
-riskHistory.map((_, i) => i + 1);
-
-chart.data.datasets[0].data =
-riskHistory;
-
-chart.update();
-
-let ketQua = "";
-
-if (risk < 60) {
-
-ketQua = "🔴 NGUY HIỂM";
-
-document.getElementById("den").style.background =
-"red";
-
-document.getElementById("den").style.boxShadow =
-"0 0 20px red";
-
-document.getElementById("textTrangThai").innerHTML =
-"NGUY HIỂM";
-
-document.getElementById("thanhRisk").style.background =
-"red";
-
-document.getElementById("khuyennghi").innerHTML =
-
-"• Nâng lồng 0,5m<br>" +
-"• Giảm 20% lượng thức ăn<br>" +
-"• Theo dõi lại sau 6 giờ";
-
-}
-
-else if (risk < 80) {
-
-ketQua = "🟡 CẢNH BÁO";
-
-document.getElementById("den").style.background =
-"gold";
-
-document.getElementById("den").style.boxShadow =
-"0 0 20px gold";
-
-document.getElementById("textTrangThai").innerHTML =
-"CẢNH BÁO";
-
-document.getElementById("thanhRisk").style.background =
-"gold";
-
-document.getElementById("khuyennghi").innerHTML =
-
-"• Theo dõi độ đục<br>" +
-"• Kiểm tra nguồn nước<br>" +
-"• Đo lại sau 3 giờ";
-
-}
-
-else {
-
-ketQua = "🟢 AN TOÀN";
-
-document.getElementById("den").style.background =
-"limegreen";
-
-document.getElementById("den").style.boxShadow =
-"0 0 20px limegreen";
-
-document.getElementById("textTrangThai").innerHTML =
-"AN TOÀN";
-
-document.getElementById("thanhRisk").style.background =
-"limegreen";
-
-document.getElementById("khuyennghi").innerHTML =
-
-"• Môi trường ổn định<br>" +
-"• Tiếp tục nuôi bình thường";
-
-}
-
-document.getElementById("ketqua").innerHTML =
-ketQua;
+    });
 
 }

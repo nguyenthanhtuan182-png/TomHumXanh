@@ -3,121 +3,294 @@
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TÔM HÙM XANH AI</title>
 
-<title>TomHumXanh</title>
+    <link rel="stylesheet" href="style.css">
 
-<link rel="stylesheet" href="style.css">
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </head>
 
 <body>
 
-<div class="logo">
-TÔM HÙM XANH ĐẮK LẮK
-</div>
+    <!-- ===================== -->
+    <!-- TIÊU ĐỀ -->
+    <!-- ===================== -->
 
-<div class="subtitle">
-AI giám sát môi trường nuôi tôm hùm
-</div>
+    <div class="logo">
+        TÔM HÙM XANH ĐẮK LẮK
+    </div>
 
-<div id="trangthai">
+    <div class="subtitle">
+        AI giám sát môi trường nuôi tôm hùm
+    </div>
 
-<div id="den"></div>
+    <!-- ===================== -->
+    <!-- MENU -->
+    <!-- ===================== -->
 
-<h2 id="textTrangThai">
-CHƯA ĐÁNH GIÁ
-</h2>
+    <div class="menu">
 
-</div>
+        <a href="#" onclick="showPage('home');return false;">
+            🏠 Trang chủ
+        </a>
 
-<div class="grid">
+        <a href="#" onclick="showPage('about');return false;">
+            ℹ️ Giới thiệu
+        </a>
 
-<div class="card">
+        <a href="#" onclick="showPage('map');return false;">
+            🗺️ Bản đồ vùng nuôi
+        </a>
 
-<h3>Nhiệt độ nước</h3>
+        <a href="#" onclick="showPage('data');return false;">
+            📊 Dữ liệu
+        </a>
 
-<p id="nhietdo" class="temp">
-28°C
-</p>
+    </div>
 
-</div>
+    <!-- ====================================================== -->
+    <!-- TRANG CHỦ -->
+    <!-- ====================================================== -->
 
-<div class="card">
+    <div id="homePage">
 
-<h3>Độ đục</h3>
+        <!-- Trạng thái -->
 
-<p id="doduc" class="turbidity">
-45 NTU
-</p>
+        <div id="trangthai">
 
-</div>
+            <div id="den"></div>
 
-<div class="card">
+            <h2 id="textTrangThai">
+                CHƯA ĐÁNH GIÁ
+            </h2>
 
-<h3>Độ mặn</h3>
+        </div>
 
-<p id="doman" class="salinity">
-32‰
-</p>
+        <!-- Thông số -->
 
-</div>
+        <div class="grid">
 
-<div class="card">
+            <div class="card">
 
-<h3>Chỉ số rủi ro</h3>
+                <h3>Nhiệt độ nước</h3>
 
-<p id="risk" class="risk">
-100
-</p>
+                <p id="nhietdo" class="temp">
+                    28°C
+                </p>
 
-</div>
+            </div>
 
-</div>
+            <div class="card">
 
-<div id="thanhNen">
+                <h3>Độ đục</h3>
 
-<div id="thanhRisk"></div>
+                <p id="doduc" class="turbidity">
+                    45 NTU
+                </p>
 
-</div>
+            </div>
 
-<button onclick="phanTich()">
+            <div class="card">
 
-Phân tích môi trường
+                <h3>Độ mặn</h3>
 
-</button>
+                <p id="doman" class="salinity">
+                    32‰
+                </p>
 
-<div id="ketqua">
+            </div>
 
-Chưa có dữ liệu
+            <div class="card">
 
-</div>
+                <h3>Chỉ số rủi ro</h3>
 
-<div class="card">
+                <p id="risk" class="risk">
+                    100
+                </p>
 
-<h3>Khuyến nghị AI</h3>
+            </div>
 
-<div id="khuyennghi">
+        </div>
 
-Chưa có dữ liệu
+        <!-- Thanh Risk -->
 
-</div>
+        <div id="thanhNen">
 
-</div>
+            <div id="thanhRisk"></div>
 
-<div class="card">
+        </div>
 
-<h3>Biểu đồ Chỉ số rủi ro</h3>
+        <!-- Nút -->
 
-<canvas id="myChart"></canvas>
+        <button onclick="phanTich()">
 
-</div>
+            Phân tích môi trường
 
-<script src="script.js"></script>
+        </button>
+
+        <!-- Kết quả -->
+
+        <div id="ketqua">
+
+            Chưa có dữ liệu
+
+        </div>
+
+        <!-- AI -->
+
+        <div class="card">
+
+            <h3>Khuyến nghị AI</h3>
+
+            <div id="khuyennghi">
+
+                Chưa có dữ liệu
+
+            </div>
+
+        </div>
+
+        <!-- Biểu đồ -->
+
+        <div class="card">
+
+            <h3>Biểu đồ Chỉ số rủi ro</h3>
+
+            <canvas id="myChart"></canvas>
+
+        </div>
+
+    </div>
+
+    <!-- ====================================================== -->
+    <!-- GIỚI THIỆU -->
+    <!-- ====================================================== -->
+
+    <div id="aboutPage" class="page">
+
+        <div class="card about">
+
+            
+            <h1>TÔM HÙM XANH AI</h1>
+
+            <h3>
+                Hệ thống giám sát môi trường nuôi tôm hùm thông minh
+            </h3>
+
+            <hr>
+
+            <p>
+
+                TÔM HÙM XANH AI là hệ thống ứng dụng trí tuệ nhân tạo (AI)
+                kết hợp các cảm biến môi trường nhằm giám sát chất lượng
+                nước trong vùng nuôi tôm hùm theo thời gian thực.
+
+            </p>
+
+            <p>
+
+                Hệ thống tự động thu thập dữ liệu, phân tích mức độ rủi ro,
+                hiển thị cảnh báo trực quan và đưa ra khuyến nghị hỗ trợ
+                người nuôi xử lý môi trường một cách nhanh chóng.
+
+            </p>
+
+            <h2>Chức năng chính</h2>
+
+            <ul>
+
+                <li>✔ Giám sát nhiệt độ nước.</li>
+
+                <li>✔ Giám sát độ đục.</li>
+
+                <li>✔ Giám sát độ mặn.</li>
+
+                <li>✔ AI đánh giá mức độ rủi ro.</li>
+
+                <li>✔ Đưa ra khuyến nghị xử lý.</li>
+
+                <li>✔ Biểu đồ theo dõi lịch sử.</li>
+
+                <li>✔ Quản lý dữ liệu vùng nuôi.</li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+    <!-- ====================================================== -->
+    <!-- BẢN ĐỒ -->
+    <!-- ====================================================== -->
+
+    <div id="mapPage" class="page">
+
+        <div class="card">
+
+            <h2>🗺️ Bản đồ vùng nuôi</h2>
+
+            <p>
+
+                Có thể thay ảnh dưới đây bằng bản đồ vùng nuôi
+                hoặc tích hợp Google Maps trong các phiên bản sau.
+
+            </p>
+
+            <img src="map.png"
+                 class="map-image"
+                 alt="Bản đồ vùng nuôi">
+
+        </div>
+
+    </div>
+
+    <!-- ====================================================== -->
+    <!-- DỮ LIỆU -->
+    <!-- ====================================================== -->
+
+    <div id="dataPage" class="page">
+
+        <div class="card">
+
+            <h2>📊 Dữ liệu giám sát</h2>
+
+            <table class="table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Lần đo</th>
+
+                        <th>Nhiệt độ</th>
+
+                        <th>Độ đục</th>
+
+                        <th>Độ mặn</th>
+
+                        <th>Risk</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="tableData">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+    <!-- ===================== -->
+
+    <script src="script.js"></script>
 
 </body>
 
