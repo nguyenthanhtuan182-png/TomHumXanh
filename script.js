@@ -114,22 +114,18 @@ function showPage(page) {
 
 function phanTich() {
 
-    // -------------------------
-    // Dữ liệu giả lập
-    // -------------------------
+    // =========================
+    // DỮ LIỆU GIẢ LẬP THỰC TẾ HƠN
+    // =========================
 
     let nhietDo =
-        Math.floor(Math.random() * 10) + 25;
+        (24 + Math.random() * 12).toFixed(1);
 
     let doDuc =
-        Math.floor(Math.random() * 100);
+        Math.floor(Math.random() * 120);
 
     let doMan =
-        Math.floor(Math.random() * 15) + 20;
-
-    // -------------------------
-    // Hiển thị
-    // -------------------------
+        (18 + Math.random() * 18).toFixed(1);
 
     document.getElementById("nhietdo").innerHTML =
         nhietDo + "°C";
@@ -141,7 +137,7 @@ function phanTich() {
         doMan + "‰";
 
     // =========================
-    // AI RISK INDEX
+    // AI PHÂN TÍCH
     // =========================
 
     let diemNhietDo = 100;
@@ -150,45 +146,55 @@ function phanTich() {
 
     let nguyenNhan = [];
 
-    // -------------------------
-    // Nhiệt độ
-    // -------------------------
+    // -------- NHIỆT ĐỘ --------
 
-    if (nhietDo > 32) {
+    if (nhietDo > 34) {
+
+        diemNhietDo = 10;
+
+        nguyenNhan.push(
+            "Nhiệt độ nước vượt ngưỡng an toàn"
+        );
+
+    } else if (nhietDo > 32) {
 
         diemNhietDo = 30;
 
         nguyenNhan.push(
-            "Nhiệt độ vượt ngưỡng 32°C"
+            "Nhiệt độ nước đang ở mức rất cao"
         );
 
-    }
-    else if (nhietDo > 30) {
+    } else if (nhietDo > 30) {
 
         diemNhietDo = 70;
 
         nguyenNhan.push(
-            "Nhiệt độ đang ở mức cảnh báo"
+            "Nhiệt độ nước đang tăng"
         );
 
     }
 
-    // -------------------------
-    // Độ đục
-    // -------------------------
+    // -------- ĐỘ ĐỤC --------
 
-    if (doDuc > 80) {
+    if (doDuc > 100) {
 
-        diemDoDuc = 20;
+        diemDoDuc = 10;
 
         nguyenNhan.push(
-            "Độ đục vượt 80 NTU"
+            "Độ đục vượt ngưỡng nghiêm trọng"
         );
 
-    }
-    else if (doDuc > 40) {
+    } else if (doDuc > 80) {
 
-        diemDoDuc = 60;
+        diemDoDuc = 30;
+
+        nguyenNhan.push(
+            "Độ đục rất cao"
+        );
+
+    } else if (doDuc > 50) {
+
+        diemDoDuc = 70;
 
         nguyenNhan.push(
             "Độ đục đang ở mức cảnh báo"
@@ -196,32 +202,86 @@ function phanTich() {
 
     }
 
-    // -------------------------
-    // Độ mặn
-    // -------------------------
+    // -------- ĐỘ MẶN --------
 
-    if (doMan < 24) {
+    if (doMan < 22) {
 
-        diemDoMan = 20;
+        diemDoMan = 10;
 
         nguyenNhan.push(
-            "Độ mặn thấp dưới 24‰"
+            "Độ mặn giảm mạnh"
+        );
+
+    } else if (doMan < 25) {
+
+        diemDoMan = 30;
+
+        nguyenNhan.push(
+            "Độ mặn thấp"
+        );
+
+    } else if (doMan < 28) {
+
+        diemDoMan = 70;
+
+        nguyenNhan.push(
+            "Độ mặn có xu hướng giảm"
         );
 
     }
-    else if (doMan < 28) {
 
-        diemDoMan = 60;
+    // =========================
+    // THÊM NGUYÊN NHÂN NGẪU NHIÊN
+    // =========================
+
+    const nguyenNhanBoSung = [
+
+        "Ảnh hưởng nước lũ",
+
+        "Nguy cơ nước bạc",
+
+        "Rong tảo phát triển mạnh",
+
+        "Thức ăn dư thừa tích tụ",
+
+        "Bùn đáy tích tụ",
+
+        "Xuất hiện khí độc tầng đáy",
+
+        "Nắng nóng kéo dài",
+
+        "Mưa lớn liên tục",
+
+        "Thủy triều bất thường",
+
+        "Thiếu lưu thông nước",
+
+        "Ô nhiễm hữu cơ cục bộ",
+
+        "Chất lượng nước suy giảm",
+
+        "Nguy cơ thiếu oxy hòa tan"
+
+    ];
+
+    if (Math.random() > 0.3) {
 
         nguyenNhan.push(
-            "Độ mặn đang giảm"
+
+            nguyenNhanBoSung[
+                Math.floor(
+                    Math.random() *
+                    nguyenNhanBoSung.length
+                )
+            ]
+
         );
 
     }
 
-    // -------------------------
-    // Risk Index
-    // -------------------------
+    // =========================
+    // AI RISK INDEX
+    // =========================
 
     let risk = Math.round(
 
@@ -232,10 +292,6 @@ function phanTich() {
         0.3 * diemDoMan
 
     );
-
-    // -------------------------
-    // Hiển thị Risk
-    // -------------------------
 
     document.getElementById("risk").innerHTML =
         risk;
@@ -251,13 +307,13 @@ function phanTich() {
 
     dataHistory.push({
 
-        nhietDo: nhietDo,
+        nhietDo,
 
-        doDuc: doDuc,
+        doDuc,
 
-        doMan: doMan,
+        doMan,
 
-        risk: risk
+        risk
 
     });
 
@@ -267,16 +323,10 @@ function phanTich() {
     if (dataHistory.length > 20)
         dataHistory.shift();
 
-    // =========================
-    // CẬP NHẬT BIỂU ĐỒ
-    // =========================
-
     chart.data.labels =
 
         riskHistory.map(
-
             (item, index) => index + 1
-
         );
 
     chart.data.datasets[0].data =
@@ -284,28 +334,77 @@ function phanTich() {
 
     chart.update();
 
-    // =========================
-    // CẬP NHẬT BẢNG
-    // =========================
-
     capNhatBang();
 
     // =========================
-    // AI KẾT LUẬN
+    // PHÂN LOẠI MỨC ĐỘ
     // =========================
 
     let ketQua = "";
     let khuyenNghi = "";
 
-    if (risk < 60) {
+    if (risk >= 90) {
+
+        ketQua = "🟢 RẤT TỐT";
+
+        document.getElementById("den").style.background =
+            "limegreen";
+
+        document.getElementById("textTrangThai").innerHTML =
+            "RẤT TỐT";
+
+        document.getElementById("thanhRisk").style.background =
+            "limegreen";
+
+    }
+    else if (risk >= 80) {
+
+        ketQua = "🟢 AN TOÀN";
+
+        document.getElementById("den").style.background =
+            "green";
+
+        document.getElementById("textTrangThai").innerHTML =
+            "AN TOÀN";
+
+        document.getElementById("thanhRisk").style.background =
+            "green";
+
+    }
+    else if (risk >= 70) {
+
+        ketQua = "🟡 THEO DÕI";
+
+        document.getElementById("den").style.background =
+            "gold";
+
+        document.getElementById("textTrangThai").innerHTML =
+            "THEO DÕI";
+
+        document.getElementById("thanhRisk").style.background =
+            "gold";
+
+    }
+    else if (risk >= 50) {
+
+        ketQua = "🟠 CẢNH BÁO";
+
+        document.getElementById("den").style.background =
+            "orange";
+
+        document.getElementById("textTrangThai").innerHTML =
+            "CẢNH BÁO";
+
+        document.getElementById("thanhRisk").style.background =
+            "orange";
+
+    }
+    else {
 
         ketQua = "🔴 NGUY HIỂM";
 
         document.getElementById("den").style.background =
             "red";
-
-        document.getElementById("den").style.boxShadow =
-            "0 0 25px red";
 
         document.getElementById("textTrangThai").innerHTML =
             "NGUY HIỂM";
@@ -313,141 +412,109 @@ function phanTich() {
         document.getElementById("thanhRisk").style.background =
             "red";
 
-        khuyenNghi =
-
-            "• Nâng lồng nuôi khoảng 0,5 m.<br>" +
-
-            "• Giảm khoảng 20% lượng thức ăn.<br>" +
-
-            "• Kiểm tra nguồn nước.<br>" +
-
-            "• Theo dõi lại sau 6 giờ.";
-
-    }
-
-    else if (risk < 80) {
-
-        ketQua = "🟡 CẢNH BÁO";
-
-        document.getElementById("den").style.background =
-            "gold";
-
-        document.getElementById("den").style.boxShadow =
-            "0 0 25px gold";
-
-        document.getElementById("textTrangThai").innerHTML =
-            "CẢNH BÁO";
-
-        document.getElementById("thanhRisk").style.background =
-            "gold";
-
-        khuyenNghi =
-
-            "• Theo dõi các thông số môi trường.<br>" +
-
-            "• Kiểm tra nguồn nước.<br>" +
-
-            "• Đo lại sau 3 giờ.";
-
-    }
-
-    else {
-
-        ketQua = "🟢 AN TOÀN";
-
-        document.getElementById("den").style.background =
-            "limegreen";
-
-        document.getElementById("den").style.boxShadow =
-            "0 0 25px limegreen";
-
-        document.getElementById("textTrangThai").innerHTML =
-            "AN TOÀN";
-
-        document.getElementById("thanhRisk").style.background =
-            "limegreen";
-
-        khuyenNghi =
-
-            "• Môi trường ổn định.<br>" +
-
-            "• Tiếp tục nuôi bình thường.<br>" +
-
-            "• Theo dõi định kỳ.";
-
     }
 
     // =========================
-    // HIỂN THỊ NGUYÊN NHÂN
+    // KHUYẾN NGHỊ NGẪU NHIÊN
     // =========================
 
-    if (nguyenNhan.length === 0) {
+    const dsKhuyenNghi = [
 
-        document.getElementById("nguyennhan").innerHTML =
+        "Nâng lồng nuôi khoảng 0,5 m",
 
-            "Không phát hiện yếu tố rủi ro.";
+        "Giảm 20% lượng thức ăn",
 
-    }
-    else {
+        "Kiểm tra nguồn nước",
 
-        document.getElementById("nguyennhan").innerHTML =
+        "Tăng cường lưu thông nước",
 
-            "• " +
+        "Theo dõi lại sau 3 giờ",
 
-            nguyenNhan.join("<br>• ");
+        "Theo dõi lại sau 6 giờ",
 
-    }
+        "Kiểm tra tầng đáy",
 
-    // =========================
-    // AI DỰ BÁO XU HƯỚNG
-    // =========================
+        "Vệ sinh lồng nuôi",
 
-    let duBao =
+        "Quan sát hoạt động bắt mồi",
 
-        "Chưa đủ dữ liệu để dự báo.";
+        "Chuẩn bị phương án di chuyển lồng",
 
-    if (dataHistory.length >= 3) {
+        "Kiểm tra hệ thống neo đậu"
 
-        let n = dataHistory.length;
+    ];
 
-        let t1 = dataHistory[n - 3].nhietDo;
-        let t2 = dataHistory[n - 2].nhietDo;
-        let t3 = dataHistory[n - 1].nhietDo;
+    let khuyenNghiDaChon = [];
 
-        if (t1 < t2 && t2 < t3) {
+    while (khuyenNghiDaChon.length < 4) {
 
-            duBao =
+        let item =
+            dsKhuyenNghi[
+                Math.floor(
+                    Math.random() *
+                    dsKhuyenNghi.length
+                )
+            ];
 
-                "Nhiệt độ đang tăng liên tục. " +
+        if (!khuyenNghiDaChon.includes(item)) {
 
-                "Nguy cơ môi trường xấu đi trong thời gian tới.";
+            khuyenNghiDaChon.push(item);
 
         }
-        else if (t1 > t2 && t2 > t3) {
-
-            duBao =
-
-                "Nhiệt độ đang giảm. " +
-
-                "Môi trường có xu hướng ổn định hơn.";
-
-        }
-        else {
-
-            duBao =
-
-                "Các thông số đang tương đối ổn định.";
-
-        }
-
     }
+
+    khuyenNghi =
+        "• " +
+        khuyenNghiDaChon.join("<br>• ");
+
+    // =========================
+    // DỰ BÁO NGẪU NHIÊN
+    // =========================
+
+    const dsDuBao = [
+
+        "Môi trường có xu hướng ổn định.",
+
+        "Nguy cơ độ đục tiếp tục tăng.",
+
+        "Nguy cơ giảm độ mặn do mưa lớn.",
+
+        "Điều kiện môi trường thuận lợi.",
+
+        "Nguy cơ xuất hiện nước bạc.",
+
+        "Nguy cơ bùng phát rong tảo.",
+
+        "Nguy cơ thiếu oxy hòa tan.",
+
+        "Chất lượng nước có dấu hiệu suy giảm.",
+
+        "Nhiệt độ có xu hướng tăng.",
+
+        "Môi trường đang cải thiện."
+    ];
 
     document.getElementById("dubao").innerHTML =
-        duBao;
+
+        dsDuBao[
+            Math.floor(
+                Math.random() *
+                dsDuBao.length
+            )
+        ];
 
     // =========================
-    // HIỂN THỊ KẾT QUẢ
+    // HIỂN THỊ
     // =========================
+
+    document.getElementById("nguyennhan").innerHTML =
+
+        nguyenNhan.length === 0
+
+            ? "Không phát hiện yếu tố rủi ro."
+
+            : "• " +
+            nguyenNhan.join("<br>• ");
 
     document.getElementById("ketqua").innerHTML =
         ketQua;
