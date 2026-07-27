@@ -94,23 +94,23 @@
 
         <div class="grid">
 
-           <div class="card sensor-card">
+          <div class="card sensor-card">
 
     <h3>Nhiệt độ nước</h3>
 
-    <div class="sensor-layout">
+    <div class="sensor-row">
 
-        <div class="sensor-number">
+        <div class="sensor-value">
 
-            <p id="nhietdo" class="temp">
+            <span id="nhietdo" class="temp">
                 28°C
-            </p>
+            </span>
 
         </div>
 
-        <div class="bullet">
+        <div class="sensor-gauge">
 
-            <div class="bullet-scale">
+            <div class="gauge-scale">
 
                 <span>20</span>
                 <span>28</span>
@@ -118,17 +118,21 @@
 
             </div>
 
-            <div class="bullet-track">
+            <div class="gauge-track">
 
-                <div id="tempFill" class="bullet-fill"></div>
+                <div class="gauge-safe"></div>
 
-                <div class="bullet-standard"></div>
+                <div id="tempPointer"
+                     class="gauge-pointer">
+                </div>
+
+                <div class="gauge-standard"></div>
 
             </div>
 
-            <div class="bullet-note">
+            <div class="gauge-label">
 
-                ▲ Chuẩn 28°C
+                <span>Chuẩn</span>
 
             </div>
 
@@ -142,38 +146,38 @@
 
     <h3>Độ đục</h3>
 
-    <div class="sensor-layout">
+    <div class="sensor-row">
 
-        <div class="sensor-number">
+        <div class="sensor-value">
 
-            <p id="doduc" class="turbidity">
+            <span id="doduc" class="turbidity">
                 45 NTU
-            </p>
+            </span>
 
         </div>
 
-        <div class="bullet">
+        <div class="sensor-gauge">
 
-            <div class="bullet-scale">
-
+            <div class="gauge-scale">
                 <span>0</span>
                 <span>50</span>
                 <span>100</span>
+            </div>
+
+            <div class="gauge-track">
+
+                <div class="gauge-safe"></div>
+
+                <div id="turbidityPointer"
+                     class="gauge-pointer">
+                </div>
+
+                <div class="gauge-standard"></div>
 
             </div>
 
-            <div class="bullet-track">
-
-                <div id="turbidityFill" class="bullet-fill"></div>
-
-                <div class="bullet-standard"></div>
-
-            </div>
-
-            <div class="bullet-note">
-
-                ▲ Chuẩn 50 NTU
-
+            <div class="gauge-label">
+                <span>Chuẩn 50 NTU</span>
             </div>
 
         </div>
@@ -182,42 +186,42 @@
 
 </div>
 
-            <div class="card sensor-card">
+           <div class="card sensor-card">
 
-    <h3>Độ mặn</h3>
+    <h3>Độ mặn (TDS)</h3>
 
-    <div class="sensor-layout">
+    <div class="sensor-row">
 
-        <div class="sensor-number">
+        <div class="sensor-value">
 
-            <p id="doman" class="salinity">
+            <span id="doman" class="salinity">
                 32‰
-            </p>
+            </span>
 
         </div>
 
-        <div class="bullet">
+        <div class="sensor-gauge">
 
-            <div class="bullet-scale">
-
+            <div class="gauge-scale">
                 <span>20</span>
                 <span>32</span>
                 <span>40</span>
+            </div>
+
+            <div class="gauge-track">
+
+                <div class="gauge-safe"></div>
+
+                <div id="salinityPointer"
+                     class="gauge-pointer">
+                </div>
+
+                <div class="gauge-standard"></div>
 
             </div>
 
-            <div class="bullet-track">
-
-                <div id="salinityFill" class="bullet-fill"></div>
-
-                <div class="bullet-standard"></div>
-
-            </div>
-
-            <div class="bullet-note">
-
-                ▲ Chuẩn 32‰
-
+            <div class="gauge-label">
+                <span>Chuẩn 32‰</span>
             </div>
 
         </div>
@@ -225,43 +229,42 @@
     </div>
 
 </div>
-
             <div class="card sensor-card">
 
     <h3>Chỉ số rủi ro</h3>
 
-    <div class="sensor-layout">
+    <div class="sensor-row">
 
-        <div class="sensor-number">
+        <div class="sensor-value">
 
-            <p id="risk" class="risk">
-                100
-            </p>
+            <span id="risk" class="risk">
+                35
+            </span>
 
         </div>
 
-        <div class="bullet">
+        <div class="sensor-gauge">
 
-            <div class="bullet-scale">
-
+            <div class="gauge-scale">
                 <span>0</span>
                 <span>50</span>
                 <span>100</span>
+            </div>
+
+            <div class="gauge-track">
+
+                <div class="gauge-safe"></div>
+
+                <div id="riskPointer"
+                     class="gauge-pointer">
+                </div>
+
+                <div class="gauge-standard"></div>
 
             </div>
 
-            <div class="bullet-track">
-
-                <div id="riskFill" class="bullet-fill"></div>
-
-                <div class="bullet-standard"></div>
-
-            </div>
-
-            <div class="bullet-note">
-
-                ▲ Chuẩn 50
-
+            <div class="gauge-label">
+                <span>Chuẩn 50</span>
             </div>
 
         </div>
@@ -269,7 +272,6 @@
     </div>
 
 </div>
-
         </div>
 
         <!-- Thanh Risk -->
