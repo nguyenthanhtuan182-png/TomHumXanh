@@ -28,5 +28,12 @@ onValue(sensorRef, (snapshot) => {
         window.nhietDo.toFixed(2) + " °C";
 
     console.log("Nhiệt độ:", window.nhietDo);
+    updatePointer(
+    "tempPointer",
+    window.nhietDo,
+    20,
+    40
+);
+phanTich();
 
 });
