@@ -120,7 +120,7 @@ function phanTich() {
     // DỮ LIỆU GIẢ LẬP THỰC TẾ HƠN
     // =========================
 
-    let nhietDo = (window.nhietDo || 0).toFixed(1);
+    let nhietDo = Number(window.nhietDo || 0);
 
     let doDuc =
         Math.floor(Math.random() * 120);
@@ -129,7 +129,7 @@ function phanTich() {
         (18 + Math.random() * 18).toFixed(1);
 
     document.getElementById("nhietdo").innerHTML =
-        nhietDo + "°C";
+    nhietDo.toFixed(1) + "°C";
 
     document.getElementById("doduc").innerHTML =
         doDuc + " NTU";
@@ -297,34 +297,33 @@ function phanTich() {
     document.getElementById("risk").innerHTML =
         risk;
 
-    updateBullet(
-        "tempFill",
-        Number(nhietDo),
-        20,
-        40
+   updatePointer(
+    "tempPointer",
+    Number(nhietDo),
+    20,
+    40
 );
 
-    updateBullet(
-        "turbidityFill",
-        Number(doDuc),
-        0,
-        100
+updatePointer(
+    "turbidityPointer",
+    Number(doDuc),
+    0,
+    100
 );
 
-    updateBullet(
-        "salinityFill",
-        Number(doMan),
-        20,
-        40
+updatePointer(
+    "salinityPointer",
+    Number(doMan),
+    20,
+    40
 );
 
-    updateBullet(
-        "riskFill",
-        Number(risk),
-        0,
-        100
+updatePointer(
+    "riskPointer",
+    Number(risk),
+    0,
+    100
 );
-
     document.getElementById("thanhRisk").style.width =
         risk + "%";
 
@@ -553,17 +552,17 @@ function phanTich() {
 
 }
 
-//========================================
-// BULLET CHART
-//========================================
+//=====================================
+// Cập nhật vị trí con trỏ Gauge
+//=====================================
 
-function updateBullet(id, value, min, max) {
+function updatePointer(id, value, min, max) {
 
     let percent = (value - min) / (max - min) * 100;
 
     percent = Math.max(0, Math.min(100, percent));
 
-    document.getElementById(id).style.width =
+    document.getElementById(id).style.left =
         percent + "%";
 
 }
