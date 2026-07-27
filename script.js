@@ -297,6 +297,34 @@ function phanTich() {
     document.getElementById("risk").innerHTML =
         risk;
 
+    updateBullet(
+        "tempFill",
+        Number(nhietDo),
+        20,
+        40
+);
+
+    updateBullet(
+        "turbidityFill",
+        Number(doDuc),
+        0,
+        100
+);
+
+    updateBullet(
+        "salinityFill",
+        Number(doMan),
+        20,
+        40
+);
+
+    updateBullet(
+        "riskFill",
+        Number(risk),
+        0,
+        100
+);
+
     document.getElementById("thanhRisk").style.width =
         risk + "%";
 
@@ -522,6 +550,21 @@ function phanTich() {
 
     document.getElementById("khuyennghi").innerHTML =
         khuyenNghi;
+
+}
+
+//========================================
+// BULLET CHART
+//========================================
+
+function updateBullet(id, value, min, max) {
+
+    let percent = (value - min) / (max - min) * 100;
+
+    percent = Math.max(0, Math.min(100, percent));
+
+    document.getElementById(id).style.width =
+        percent + "%";
 
 }
 

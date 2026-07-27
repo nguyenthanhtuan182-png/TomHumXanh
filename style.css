@@ -587,3 +587,152 @@ hr{
     }
 
 }
+/*==================================================
+BULLET CHART
+==================================================*/
+
+.sensor-layout{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:20px;
+
+}
+
+.sensor-number{
+
+    width:110px;
+
+    flex-shrink:0;
+
+}
+
+.sensor-number p{
+
+    font-size:34px;
+
+    font-weight:bold;
+
+    margin:0;
+
+}
+
+.bullet{
+
+    flex:1;
+
+}
+
+.bullet-scale{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    font-size:12px;
+
+    color:#666;
+
+    margin-bottom:6px;
+
+}
+
+.bullet-track{
+
+    position:relative;
+
+    height:18px;
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+    background:
+    linear-gradient(
+        to right,
+
+        #2ecc71 0%,
+        #2ecc71 60%,
+
+        #f1c40f 80%,
+
+        #e74c3c 100%
+    );
+
+}
+
+.bullet-fill{
+
+    position:absolute;
+
+    left:0;
+
+    top:0;
+
+    height:100%;
+
+    width:0%;
+
+    background:rgba(255,255,255,.45);
+
+    border-radius:20px;
+
+    transition:width .7s ease;
+
+}
+
+.bullet-fill::after{
+
+    content:"";
+
+    position:absolute;
+
+    right:-8px;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    width:16px;
+
+    height:16px;
+
+    border-radius:50%;
+
+    background:white;
+
+    box-shadow:
+    0 0 8px white,
+    0 0 15px white;
+
+}
+
+.bullet-standard{
+
+    position:absolute;
+
+    left:40%;
+
+    top:-4px;
+
+    width:3px;
+
+    height:26px;
+
+    background:#111;
+
+}
+
+.bullet-note{
+
+    margin-top:6px;
+
+    font-size:12px;
+
+    color:#555;
+
+    font-weight:600;
+
+}
