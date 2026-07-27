@@ -6,7 +6,9 @@
 let riskHistory = [];
 let dataHistory = [];
 let chart = null;
-
+let nhietDo = 0;
+let doDuc = 0;
+let doMan = 0;
 // ===============================
 // Khởi tạo
 // ===============================
@@ -118,8 +120,7 @@ function phanTich() {
     // DỮ LIỆU GIẢ LẬP THỰC TẾ HƠN
     // =========================
 
-    let nhietDo =
-        (24 + Math.random() * 12).toFixed(1);
+    let nhietDo = (window.nhietDo || 0).toFixed(1);
 
     let doDuc =
         Math.floor(Math.random() * 120);
