@@ -34,6 +34,5 @@ onValue(sensorRef, (snapshot) => {
     20,
     40
 );
-phanTich();
 
 });
