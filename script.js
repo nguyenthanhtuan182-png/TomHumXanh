@@ -600,8 +600,3 @@ function capNhatBang() {
     });
 
 }
-window.addEventListener("load", () => {
-
-    phanTich();
-
-});
