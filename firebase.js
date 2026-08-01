@@ -52,6 +52,10 @@ updatePointer(
     1000
 );
 
-phanTich();
+// Chỉ cập nhật chỉ số.
+// Không tự động phân tích môi trường.
+
+capNhatDuLieu();
 
 });
+

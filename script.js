@@ -120,7 +120,7 @@ function showPage(page) {
 // PHÂN TÍCH AI
 // ===============================
 
-function phanTich() {
+function capNhatDuLieu() {
 
     // =========================
     // DỮ LIỆU CẢM BIẾN
