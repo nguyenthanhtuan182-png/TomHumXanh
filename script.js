@@ -555,7 +555,7 @@ function phanTich() {
 //=====================================
 
 function updatePointer(id, value, min, max) {
-
+    console.log(id, value, min, max);
     let percent = (value - min) / (max - min) * 100;
 
     percent = Math.max(0, Math.min(100, percent));
