@@ -52,4 +52,6 @@ updatePointer(
     1000
 );
 
+phanTich();
+
 });

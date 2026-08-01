@@ -11,8 +11,6 @@ let nhietDo = 0;
 let doDuc = 0;
 let doMan = 0;
 
-window.nhietDo = 0;
-window.turbidity = 0;
 // ===============================
 // Khởi tạo
 // ===============================
@@ -20,20 +18,6 @@ window.turbidity = 0;
 window.onload = function () {
 
     showPage("home");
-
-    const db = firebase.database();
-
-    db.ref("TomHumAI").on("value", function(snapshot){
-
-        const data = snapshot.val();
-
-        if(!data) return;
-
-        window.nhietDo = Number(data.temperature || 0);
-
-        window.turbidity = Number(data.turbidity || 0);
-
-    });
 
     const ctx = document.getElementById("myChart");
 
@@ -94,7 +78,6 @@ window.onload = function () {
     });
 
 };
-
 // ===============================
 // Chuyển trang
 // ===============================
@@ -127,7 +110,6 @@ function showPage(page) {
     }
 
 }
-
 // ===============================
 // PHÂN TÍCH AI
 // ===============================
@@ -135,7 +117,7 @@ function showPage(page) {
 function phanTich() {
 
     // =========================
-    // DỮ LIỆU GIẢ LẬP THỰC TẾ HƠN
+    // DỮ LIỆU CẢM BIẾN
     // =========================
 
     let nhietDo = Number(window.nhietDo || 0);
@@ -143,10 +125,10 @@ function phanTich() {
     let doDuc = Number(window.turbidity || 0);
 
     let doMan =
-    (18 + Math.random() * 18).toFixed(1);
+        (18 + Math.random() * 18).toFixed(1);
 
     document.getElementById("nhietdo").innerHTML =
-    nhietDo.toFixed(1) + "°C";
+        nhietDo.toFixed(1) + "°C";
 
     document.getElementById("doduc").innerHTML =
         doDuc + " NTU";
@@ -247,7 +229,6 @@ function phanTich() {
         );
 
     }
-
     // =========================
     // THÊM NGUYÊN NHÂN NGẪU NHIÊN
     // =========================
@@ -314,33 +295,34 @@ function phanTich() {
     document.getElementById("risk").innerHTML =
         risk;
 
-   updatePointer(
-    "tempPointer",
-    Number(nhietDo),
-    20,
-    40
-);
+    updatePointer(
+        "tempPointer",
+        Number(nhietDo),
+        20,
+        40
+    );
 
-updatePointer(
-    "turbidityPointer",
-    Number(doDuc),
-    0,
-    100
-);
+    updatePointer(
+        "turbidityPointer",
+        Number(doDuc),
+        0,
+        100
+    );
 
-updatePointer(
-    "salinityPointer",
-    Number(doMan),
-    20,
-    40
-);
+    updatePointer(
+        "salinityPointer",
+        Number(doMan),
+        20,
+        40
+    );
 
-updatePointer(
-    "riskPointer",
-    Number(risk),
-    0,
-    100
-);
+    updatePointer(
+        "riskPointer",
+        Number(risk),
+        0,
+        1000
+    );
+
     document.getElementById("thanhRisk").style.width =
         risk + "%";
 
@@ -380,7 +362,6 @@ updatePointer(
     chart.update();
 
     capNhatBang();
-
     // =========================
     // PHÂN LOẠI MỨC ĐỘ
     // =========================
@@ -506,13 +487,13 @@ updatePointer(
             khuyenNghiDaChon.push(item);
 
         }
+
     }
 
     khuyenNghi =
         "• " +
         khuyenNghiDaChon.join("<br>• ");
-
-    // =========================
+            // =========================
     // DỰ BÁO NGẪU NHIÊN
     // =========================
 
@@ -537,6 +518,7 @@ updatePointer(
         "Nhiệt độ có xu hướng tăng.",
 
         "Môi trường đang cải thiện."
+
     ];
 
     document.getElementById("dubao").innerHTML =
@@ -559,7 +541,7 @@ updatePointer(
             ? "Không phát hiện yếu tố rủi ro."
 
             : "• " +
-            nguyenNhan.join("<br>• ");
+              nguyenNhan.join("<br>• ");
 
     document.getElementById("ketqua").innerHTML =
         ketQua;
@@ -568,7 +550,6 @@ updatePointer(
         khuyenNghi;
 
 }
-
 //=====================================
 // Cập nhật vị trí con trỏ Gauge
 //=====================================
