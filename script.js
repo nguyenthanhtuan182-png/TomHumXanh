@@ -6,9 +6,13 @@
 let riskHistory = [];
 let dataHistory = [];
 let chart = null;
+
 let nhietDo = 0;
 let doDuc = 0;
 let doMan = 0;
+
+window.nhietDo = 0;
+window.turbidity = 0;
 // ===============================
 // Khởi tạo
 // ===============================
@@ -16,6 +20,20 @@ let doMan = 0;
 window.onload = function () {
 
     showPage("home");
+
+    const db = firebase.database();
+
+    db.ref("TomHumAI").on("value", function(snapshot){
+
+        const data = snapshot.val();
+
+        if(!data) return;
+
+        window.nhietDo = Number(data.temperature || 0);
+
+        window.turbidity = Number(data.turbidity || 0);
+
+    });
 
     const ctx = document.getElementById("myChart");
 
@@ -122,11 +140,10 @@ function phanTich() {
 
     let nhietDo = Number(window.nhietDo || 0);
 
-    let doDuc =
-        Math.floor(Math.random() * 120);
+    let doDuc = Number(window.turbidity || 0);
 
     let doMan =
-        (18 + Math.random() * 18).toFixed(1);
+    (18 + Math.random() * 18).toFixed(1);
 
     document.getElementById("nhietdo").innerHTML =
     nhietDo.toFixed(1) + "°C";
