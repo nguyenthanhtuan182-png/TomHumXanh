@@ -185,16 +185,21 @@ function capNhatDuLieu() {
     else if (doMan < 28)
         diemDoMan = 70;
 
-    risk = Math.round(
+   let riskRaw = Math.round(
 
-        diemNhietDo * 0.4 +
+    diemNhietDo * 0.4 +
 
-        diemDoDuc * 0.3 +
+    diemDoDuc * 0.3 +
 
-        diemDoMan * 0.3
+    diemDoMan * 0.3
 
-    );
+);
 
+// Đảo chiều Risk:
+// 0 = An toàn
+// 100 = Nguy hiểm
+
+risk = 100 - riskRaw;
     document.getElementById("risk").innerHTML = risk;
 
     // =========================
@@ -411,80 +416,76 @@ else if (doDuc >= 200) {
 
     let ketQua = "";
 
-    if (risk >= 90) {
+    if (risk <= 10) {
 
-        ketQua = "🟢 RẤT TỐT";
+    ketQua = "🟢 RẤT TỐT";
 
-        document.getElementById("den").style.background =
-            "limegreen";
+    document.getElementById("den").style.background =
+        "limegreen";
 
-        document.getElementById("textTrangThai").innerHTML =
-            "RẤT TỐT";
+    document.getElementById("textTrangThai").innerHTML =
+        "RẤT TỐT";
 
-        document.getElementById("thanhRisk").style.background =
-            "limegreen";
+    document.getElementById("thanhRisk").style.background =
+        "limegreen";
 
-    }
+}
+else if (risk <= 20) {
 
-    else if (risk >= 80) {
+    ketQua = "🟢 AN TOÀN";
 
-        ketQua = "🟢 AN TOÀN";
+    document.getElementById("den").style.background =
+        "green";
 
-        document.getElementById("den").style.background =
-            "green";
+    document.getElementById("textTrangThai").innerHTML =
+        "AN TOÀN";
 
-        document.getElementById("textTrangThai").innerHTML =
-            "AN TOÀN";
+    document.getElementById("thanhRisk").style.background =
+        "green";
 
-        document.getElementById("thanhRisk").style.background =
-            "green";
+}
+else if (risk <= 30) {
 
-    }
+    ketQua = "🟡 THEO DÕI";
 
-    else if (risk >= 70) {
+    document.getElementById("den").style.background =
+        "gold";
 
-        ketQua = "🟡 THEO DÕI";
+    document.getElementById("textTrangThai").innerHTML =
+        "THEO DÕI";
 
-        document.getElementById("den").style.background =
-            "gold";
+    document.getElementById("thanhRisk").style.background =
+        "gold";
 
-        document.getElementById("textTrangThai").innerHTML =
-            "THEO DÕI";
+}
+else if (risk <= 50) {
 
-        document.getElementById("thanhRisk").style.background =
-            "gold";
+    ketQua = "🟠 CẢNH BÁO";
 
-    }
+    document.getElementById("den").style.background =
+        "orange";
 
-    else if (risk >= 50) {
+    document.getElementById("textTrangThai").innerHTML =
+        "CẢNH BÁO";
 
-        ketQua = "🟠 CẢNH BÁO";
+    document.getElementById("thanhRisk").style.background =
+        "orange";
 
-        document.getElementById("den").style.background =
-            "orange";
+}
+else {
 
-        document.getElementById("textTrangThai").innerHTML =
-            "CẢNH BÁO";
+    ketQua = "🔴 NGUY HIỂM";
 
-        document.getElementById("thanhRisk").style.background =
-            "orange";
+    document.getElementById("den").style.background =
+        "red";
 
-    }
+    document.getElementById("textTrangThai").innerHTML =
+        "NGUY HIỂM";
 
-    else {
+    document.getElementById("thanhRisk").style.background =
+        "red";
 
-        ketQua = "🔴 NGUY HIỂM";
-
-        document.getElementById("den").style.background =
-            "red";
-
-        document.getElementById("textTrangThai").innerHTML =
-            "NGUY HIỂM";
-
-        document.getElementById("thanhRisk").style.background =
-            "red";
-
-    }
+}
         // =========================
     // KHUYẾN NGHỊ AI
     // =========================
