@@ -11,6 +11,11 @@ let nhietDo = 0;
 let doDuc = 0;
 let doMan = 0;
 
+// Dữ liệu nhận từ Firebase
+window.nhietDo = 0;
+window.turbidity = 0;
+window.tds = 0;
+
 // ===============================
 // Khởi tạo
 // ===============================
@@ -110,6 +115,7 @@ function showPage(page) {
     }
 
 }
+
 // ===============================
 // PHÂN TÍCH AI
 // ===============================
@@ -120,12 +126,28 @@ function phanTich() {
     // DỮ LIỆU CẢM BIẾN
     // =========================
 
+    // Nhiệt độ (giữ nguyên)
     let nhietDo = Number(window.nhietDo || 0);
 
-    let doDuc = Number(window.turbidity || 0);
+    // ADC độ đục từ ESP32
+    let adcDoDuc = Number(window.turbidity || 0);
 
+    // Quy đổi:
+    // ADC = 2200 -> 0 NTU
+    // ADC = 0    -> 1000 NTU
+
+    let doDuc = Math.round((2200 - adcDoDuc) * 1000 / 2200);
+
+    if (doDuc < 0) doDuc = 0;
+    if (doDuc > 1000) doDuc = 1000;
+
+    // TDS (tạm thời giữ nguyên như bản cũ)
     let doMan =
         (18 + Math.random() * 18).toFixed(1);
+
+    // =========================
+    // HIỂN THỊ
+    // =========================
 
     document.getElementById("nhietdo").innerHTML =
         nhietDo.toFixed(1) + "°C";
@@ -175,29 +197,36 @@ function phanTich() {
     }
 
     // -------- ĐỘ ĐỤC --------
-
-    if (doDuc > 100) {
+    if (doDuc >= 800) {
 
         diemDoDuc = 10;
 
         nguyenNhan.push(
-            "Độ đục vượt ngưỡng nghiêm trọng"
+            "Độ đục ở mức rất cao"
         );
 
-    } else if (doDuc > 80) {
+    } else if (doDuc >= 600) {
 
         diemDoDuc = 30;
 
         nguyenNhan.push(
-            "Độ đục rất cao"
+            "Độ đục ở mức cao"
         );
 
-    } else if (doDuc > 50) {
+    } else if (doDuc >= 400) {
+
+        diemDoDuc = 50;
+
+        nguyenNhan.push(
+            "Độ đục có xu hướng tăng"
+        );
+
+    } else if (doDuc >= 200) {
 
         diemDoDuc = 70;
 
         nguyenNhan.push(
-            "Độ đục đang ở mức cảnh báo"
+            "Độ đục cần theo dõi"
         );
 
     }
@@ -229,6 +258,7 @@ function phanTich() {
         );
 
     }
+
     // =========================
     // THÊM NGUYÊN NHÂN NGẪU NHIÊN
     // =========================
@@ -294,6 +324,9 @@ function phanTich() {
 
     document.getElementById("risk").innerHTML =
         risk;
+    // =========================
+    // CẬP NHẬT ĐỒNG HỒ
+    // =========================
 
     updatePointer(
         "tempPointer",
@@ -306,7 +339,7 @@ function phanTich() {
         "turbidityPointer",
         Number(doDuc),
         0,
-        100
+        1000
     );
 
     updatePointer(
@@ -320,7 +353,7 @@ function phanTich() {
         "riskPointer",
         Number(risk),
         0,
-        1000
+        100
     );
 
     document.getElementById("thanhRisk").style.width =
@@ -362,6 +395,7 @@ function phanTich() {
     chart.update();
 
     capNhatBang();
+
     // =========================
     // PHÂN LOẠI MỨC ĐỘ
     // =========================
@@ -439,7 +473,6 @@ function phanTich() {
             "red";
 
     }
-
     // =========================
     // KHUYẾN NGHỊ NGẪU NHIÊN
     // =========================
@@ -493,7 +526,8 @@ function phanTich() {
     khuyenNghi =
         "• " +
         khuyenNghiDaChon.join("<br>• ");
-            // =========================
+
+    // =========================
     // DỰ BÁO NGẪU NHIÊN
     // =========================
 
@@ -555,7 +589,7 @@ function phanTich() {
 //=====================================
 
 function updatePointer(id, value, min, max) {
-    console.log(id, value, min, max);
+
     let percent = (value - min) / (max - min) * 100;
 
     percent = Math.max(0, Math.min(100, percent));
@@ -584,13 +618,13 @@ function capNhatBang() {
             index + 1;
 
         row.insertCell(1).innerHTML =
-            item.nhietDo + "°C";
+            item.nhietDo.toFixed(1) + "°C";
 
         row.insertCell(2).innerHTML =
             item.doDuc + " NTU";
 
         row.insertCell(3).innerHTML =
-            item.doMan + "‰";
+            Number(item.doMan).toFixed(1) + "‰";
 
         row.insertCell(4).innerHTML =
             item.risk;
