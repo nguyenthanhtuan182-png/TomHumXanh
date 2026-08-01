@@ -34,5 +34,22 @@ onValue(sensorRef, (snapshot) => {
     20,
     40
 );
+//==============================
+// ĐỘ ĐỤC
+//==============================
+
+window.turbidity = Number(data.turbidity || 0);
+
+document.getElementById("doduc").innerHTML =
+    window.turbidity + " NTU";
+
+console.log("Độ đục:", window.turbidity);
+
+updatePointer(
+    "turbidityPointer",
+    window.turbidity,
+    0,
+    1000
+);
 
 });
