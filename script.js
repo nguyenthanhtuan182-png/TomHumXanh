@@ -7,17 +7,25 @@ let riskHistory = [];
 let dataHistory = [];
 let chart = null;
 
+// ===============================
+// DỮ LIỆU HIỆN TẠI
+// ===============================
+
 let nhietDo = 0;
 let doDuc = 0;
 let doMan = 0;
+let risk = 0;
 
-// Dữ liệu nhận từ Firebase
+// ===============================
+// DỮ LIỆU NHẬN TỪ FIREBASE
+// ===============================
+
 window.nhietDo = 0;
 window.turbidity = 0;
 window.tds = 0;
 
 // ===============================
-// Khởi tạo
+// KHỞI TẠO
 // ===============================
 
 window.onload = function () {
@@ -83,8 +91,9 @@ window.onload = function () {
     });
 
 };
+
 // ===============================
-// Chuyển trang
+// CHUYỂN TRANG
 // ===============================
 
 function showPage(page) {
@@ -115,38 +124,28 @@ function showPage(page) {
     }
 
 }
-
-// ===============================
-// PHÂN TÍCH AI
-// ===============================
-
 function capNhatDuLieu() {
 
     // =========================
-    // DỮ LIỆU CẢM BIẾN
+    // ĐỌC DỮ LIỆU FIREBASE
     // =========================
 
-    // Nhiệt độ (giữ nguyên)
-    let nhietDo = Number(window.nhietDo || 0);
+    nhietDo = Number(window.nhietDo || 0);
 
-    // ADC độ đục từ ESP32
     let adcDoDuc = Number(window.turbidity || 0);
 
-    // Quy đổi:
-    // ADC = 2200 -> 0 NTU
-    // ADC = 0    -> 1000 NTU
-
-    let doDuc = Math.round((2200 - adcDoDuc) * 1000 / 2200);
+    doDuc = Math.round((2200 - adcDoDuc) * 1000 / 2200);
 
     if (doDuc < 0) doDuc = 0;
     if (doDuc > 1000) doDuc = 1000;
 
-    // TDS (tạm thời giữ nguyên như bản cũ)
-    let doMan =
-        (18 + Math.random() * 18).toFixed(1);
+    // Tạm thời.
+    // Khi ESP32 gửi độ mặn thì chỉ sửa đúng dòng này.
+
+    doMan = Number(window.tds || 0);
 
     // =========================
-    // HIỂN THỊ
+    // HIỂN THỊ CHỈ SỐ
     // =========================
 
     document.getElementById("nhietdo").innerHTML =
@@ -156,19 +155,120 @@ function capNhatDuLieu() {
         doDuc + " NTU";
 
     document.getElementById("doman").innerHTML =
-        doMan + "‰";
+        doMan.toFixed(1) + "‰";
 
     // =========================
-    // AI PHÂN TÍCH
+    // CHẤM ĐIỂM
     // =========================
+
+    let diemNhietDo = 100;
+
+    if (nhietDo > 34)
+        diemNhietDo = 10;
+
+    else if (nhietDo > 32)
+        diemNhietDo = 30;
+
+    else if (nhietDo > 30)
+        diemNhietDo = 70;
+
+    let diemDoDuc = 100;
+
+    if (doDuc >= 800)
+        diemDoDuc = 10;
+
+    else if (doDuc >= 600)
+        diemDoDuc = 30;
+
+    else if (doDuc >= 400)
+        diemDoDuc = 50;
+
+    else if (doDuc >= 200)
+        diemDoDuc = 70;
+
+    let diemDoMan = 100;
+
+    if (doMan < 22)
+        diemDoMan = 10;
+
+    else if (doMan < 25)
+        diemDoMan = 30;
+
+    else if (doMan < 28)
+        diemDoMan = 70;
+
+    // =========================
+    // RISK INDEX
+    // =========================
+
+    risk = Math.round(
+
+        diemNhietDo * 0.4 +
+
+        diemDoDuc * 0.3 +
+
+        diemDoMan * 0.3
+
+    );
+
+    document.getElementById("risk").innerHTML =
+        risk;
+
+    // =========================
+    // CẬP NHẬT ĐỒNG HỒ
+    // =========================
+
+    updatePointer(
+        "tempPointer",
+        nhietDo,
+        20,
+        40
+    );
+
+    updatePointer(
+        "turbidityPointer",
+        doDuc,
+        0,
+        1000
+    );
+
+    updatePointer(
+        "salinityPointer",
+        doMan,
+        20,
+        40
+    );
+
+    updatePointer(
+        "riskPointer",
+        risk,
+        0,
+        100
+    );
+
+    document.getElementById("thanhRisk").style.width =
+        risk + "%";
+
+}
+// ===============================
+// PHÂN TÍCH MÔI TRƯỜNG
+// ===============================
+
+function phanTich() {
+
+    // Luôn lấy dữ liệu mới nhất
+
+    capNhatDuLieu();
+
+    let nguyenNhan = [];
 
     let diemNhietDo = 100;
     let diemDoDuc = 100;
     let diemDoMan = 100;
 
-    let nguyenNhan = [];
-
-    // -------- NHIỆT ĐỘ --------
+    // =========================
+    // NHIỆT ĐỘ
+    // =========================
 
     if (nhietDo > 34) {
 
@@ -178,7 +278,8 @@ function capNhatDuLieu() {
             "Nhiệt độ nước vượt ngưỡng an toàn"
         );
 
-    } else if (nhietDo > 32) {
+    }
+    else if (nhietDo > 32) {
 
         diemNhietDo = 30;
 
@@ -186,7 +287,8 @@ function capNhatDuLieu() {
             "Nhiệt độ nước đang ở mức rất cao"
         );
 
-    } else if (nhietDo > 30) {
+    }
+    else if (nhietDo > 30) {
 
         diemNhietDo = 70;
 
@@ -196,7 +298,10 @@ function capNhatDuLieu() {
 
     }
 
-    // -------- ĐỘ ĐỤC --------
+    // =========================
+    // ĐỘ ĐỤC
+    // =========================
+
     if (doDuc >= 800) {
 
         diemDoDuc = 10;
@@ -205,7 +310,8 @@ function capNhatDuLieu() {
             "Độ đục ở mức rất cao"
         );
 
-    } else if (doDuc >= 600) {
+    }
+    else if (doDuc >= 600) {
 
         diemDoDuc = 30;
 
@@ -213,7 +319,8 @@ function capNhatDuLieu() {
             "Độ đục ở mức cao"
         );
 
-    } else if (doDuc >= 400) {
+    }
+    else if (doDuc >= 400) {
 
         diemDoDuc = 50;
 
@@ -221,7 +328,8 @@ function capNhatDuLieu() {
             "Độ đục có xu hướng tăng"
         );
 
-    } else if (doDuc >= 200) {
+    }
+    else if (doDuc >= 200) {
 
         diemDoDuc = 70;
 
@@ -231,7 +339,9 @@ function capNhatDuLieu() {
 
     }
 
-    // -------- ĐỘ MẶN --------
+    // =========================
+    // ĐỘ MẶN
+    // =========================
 
     if (doMan < 22) {
 
@@ -241,7 +351,8 @@ function capNhatDuLieu() {
             "Độ mặn giảm mạnh"
         );
 
-    } else if (doMan < 25) {
+    }
+    else if (doMan < 25) {
 
         diemDoMan = 30;
 
@@ -249,7 +360,8 @@ function capNhatDuLieu() {
             "Độ mặn thấp"
         );
 
-    } else if (doMan < 28) {
+    }
+    else if (doMan < 28) {
 
         diemDoMan = 70;
 
@@ -259,8 +371,19 @@ function capNhatDuLieu() {
 
     }
 
+    // Risk hiện tại
+
+    risk = Math.round(
+
+        diemNhietDo * 0.4 +
+
+        diemDoDuc * 0.3 +
+
+        diemDoMan * 0.3
+
+    );
     // =========================
-    // THÊM NGUYÊN NHÂN NGẪU NHIÊN
+    // THÊM NGUYÊN NHÂN
     // =========================
 
     const nguyenNhanBoSung = [
@@ -298,66 +421,20 @@ function capNhatDuLieu() {
         nguyenNhan.push(
 
             nguyenNhanBoSung[
+
                 Math.floor(
+
                     Math.random() *
+
                     nguyenNhanBoSung.length
+
                 )
+
             ]
 
         );
 
     }
-
-    // =========================
-    // AI RISK INDEX
-    // =========================
-
-    let risk = Math.round(
-
-        0.4 * diemNhietDo +
-
-        0.3 * diemDoDuc +
-
-        0.3 * diemDoMan
-
-    );
-
-    document.getElementById("risk").innerHTML =
-        risk;
-    // =========================
-    // CẬP NHẬT ĐỒNG HỒ
-    // =========================
-
-    updatePointer(
-        "tempPointer",
-        Number(nhietDo),
-        20,
-        40
-    );
-
-    updatePointer(
-        "turbidityPointer",
-        Number(doDuc),
-        0,
-        1000
-    );
-
-    updatePointer(
-        "salinityPointer",
-        Number(doMan),
-        20,
-        40
-    );
-
-    updatePointer(
-        "riskPointer",
-        Number(risk),
-        0,
-        100
-    );
-
-    document.getElementById("thanhRisk").style.width =
-        risk + "%";
 
     // =========================
     // LƯU LỊCH SỬ
@@ -378,18 +455,23 @@ function capNhatDuLieu() {
     });
 
     if (riskHistory.length > 20)
+
         riskHistory.shift();
 
     if (dataHistory.length > 20)
+
         dataHistory.shift();
 
     chart.data.labels =
 
         riskHistory.map(
+
             (item, index) => index + 1
+
         );
 
     chart.data.datasets[0].data =
+
         riskHistory;
 
     chart.update();
@@ -397,10 +479,11 @@ function capNhatDuLieu() {
     capNhatBang();
 
     // =========================
-    // PHÂN LOẠI MỨC ĐỘ
+    // PHÂN LOẠI
     // =========================
 
     let ketQua = "";
+
     let khuyenNghi = "";
 
     if (risk >= 90) {
@@ -408,68 +491,87 @@ function capNhatDuLieu() {
         ketQua = "🟢 RẤT TỐT";
 
         document.getElementById("den").style.background =
+
             "limegreen";
 
         document.getElementById("textTrangThai").innerHTML =
+
             "RẤT TỐT";
 
         document.getElementById("thanhRisk").style.background =
+
             "limegreen";
 
     }
+
     else if (risk >= 80) {
 
         ketQua = "🟢 AN TOÀN";
 
         document.getElementById("den").style.background =
+
             "green";
 
         document.getElementById("textTrangThai").innerHTML =
+
             "AN TOÀN";
 
         document.getElementById("thanhRisk").style.background =
+
             "green";
 
     }
+
     else if (risk >= 70) {
 
         ketQua = "🟡 THEO DÕI";
 
         document.getElementById("den").style.background =
+
             "gold";
 
         document.getElementById("textTrangThai").innerHTML =
+
             "THEO DÕI";
 
         document.getElementById("thanhRisk").style.background =
+
             "gold";
 
     }
+
     else if (risk >= 50) {
 
         ketQua = "🟠 CẢNH BÁO";
 
         document.getElementById("den").style.background =
+
             "orange";
 
         document.getElementById("textTrangThai").innerHTML =
+
             "CẢNH BÁO";
 
         document.getElementById("thanhRisk").style.background =
+
             "orange";
 
     }
+
     else {
 
         ketQua = "🔴 NGUY HIỂM";
 
         document.getElementById("den").style.background =
+
             "red";
 
         document.getElementById("textTrangThai").innerHTML =
+
             "NGUY HIỂM";
 
         document.getElementById("thanhRisk").style.background =
+
             "red";
 
     }
@@ -507,13 +609,17 @@ function capNhatDuLieu() {
 
     while (khuyenNghiDaChon.length < 4) {
 
-        let item =
-            dsKhuyenNghi[
-                Math.floor(
-                    Math.random() *
-                    dsKhuyenNghi.length
-                )
-            ];
+        let item = dsKhuyenNghi[
+
+            Math.floor(
+
+                Math.random() *
+
+                dsKhuyenNghi.length
+
+            )
+
+        ];
 
         if (!khuyenNghiDaChon.includes(item)) {
 
@@ -524,11 +630,13 @@ function capNhatDuLieu() {
     }
 
     khuyenNghi =
+
         "• " +
+
         khuyenNghiDaChon.join("<br>• ");
 
     // =========================
-    // DỰ BÁO NGẪU NHIÊN
+    // DỰ BÁO
     // =========================
 
     const dsDuBao = [
@@ -558,10 +666,15 @@ function capNhatDuLieu() {
     document.getElementById("dubao").innerHTML =
 
         dsDuBao[
+
             Math.floor(
+
                 Math.random() *
+
                 dsDuBao.length
+
             )
+
         ];
 
     // =========================
@@ -575,12 +688,15 @@ function capNhatDuLieu() {
             ? "Không phát hiện yếu tố rủi ro."
 
             : "• " +
+
               nguyenNhan.join("<br>• ");
 
     document.getElementById("ketqua").innerHTML =
+
         ketQua;
 
     document.getElementById("khuyennghi").innerHTML =
+
         khuyenNghi;
 
 }
