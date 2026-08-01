@@ -132,15 +132,10 @@ function capNhatDuLieu() {
 
     nhietDo = Number(window.nhietDo || 0);
 
-    let adcDoDuc = Number(window.turbidity || 0);
-
-    doDuc = Math.round((2200 - adcDoDuc) * 1000 / 2200);
+    doDuc = Number(window.turbidity || 0);
 
     if (doDuc < 0) doDuc = 0;
     if (doDuc > 1000) doDuc = 1000;
-
-    // Tạm thời.
-    // Khi ESP32 gửi độ mặn thì chỉ sửa đúng dòng này.
 
     doMan = Number(window.tds || 0);
 
@@ -158,17 +153,15 @@ function capNhatDuLieu() {
         doMan.toFixed(1) + "‰";
 
     // =========================
-    // CHẤM ĐIỂM
+    // TÍNH RISK INDEX
     // =========================
 
     let diemNhietDo = 100;
 
     if (nhietDo > 34)
         diemNhietDo = 10;
-
     else if (nhietDo > 32)
         diemNhietDo = 30;
-
     else if (nhietDo > 30)
         diemNhietDo = 70;
 
@@ -176,13 +169,10 @@ function capNhatDuLieu() {
 
     if (doDuc >= 800)
         diemDoDuc = 10;
-
     else if (doDuc >= 600)
         diemDoDuc = 30;
-
     else if (doDuc >= 400)
         diemDoDuc = 50;
-
     else if (doDuc >= 200)
         diemDoDuc = 70;
 
@@ -190,16 +180,10 @@ function capNhatDuLieu() {
 
     if (doMan < 22)
         diemDoMan = 10;
-
     else if (doMan < 25)
         diemDoMan = 30;
-
     else if (doMan < 28)
         diemDoMan = 70;
-
-    // =========================
-    // RISK INDEX
-    // =========================
 
     risk = Math.round(
 
@@ -211,8 +195,7 @@ function capNhatDuLieu() {
 
     );
 
-    document.getElementById("risk").innerHTML =
-        risk;
+    document.getElementById("risk").innerHTML = risk;
 
     // =========================
     // CẬP NHẬT ĐỒNG HỒ
@@ -262,17 +245,13 @@ function phanTich() {
 
     let nguyenNhan = [];
 
-    let diemNhietDo = 100;
-    let diemDoDuc = 100;
-    let diemDoMan = 100;
+    let khuyenNghi = [];
 
     // =========================
     // NHIỆT ĐỘ
     // =========================
 
     if (nhietDo > 34) {
-
-        diemNhietDo = 10;
 
         nguyenNhan.push(
             "Nhiệt độ nước vượt ngưỡng an toàn"
@@ -281,16 +260,12 @@ function phanTich() {
     }
     else if (nhietDo > 32) {
 
-        diemNhietDo = 30;
-
         nguyenNhan.push(
             "Nhiệt độ nước đang ở mức rất cao"
         );
 
     }
     else if (nhietDo > 30) {
-
-        diemNhietDo = 70;
 
         nguyenNhan.push(
             "Nhiệt độ nước đang tăng"
@@ -304,16 +279,12 @@ function phanTich() {
 
     if (doDuc >= 800) {
 
-        diemDoDuc = 10;
-
         nguyenNhan.push(
             "Độ đục ở mức rất cao"
         );
 
     }
     else if (doDuc >= 600) {
-
-        diemDoDuc = 30;
 
         nguyenNhan.push(
             "Độ đục ở mức cao"
@@ -322,16 +293,12 @@ function phanTich() {
     }
     else if (doDuc >= 400) {
 
-        diemDoDuc = 50;
-
         nguyenNhan.push(
             "Độ đục có xu hướng tăng"
         );
 
     }
     else if (doDuc >= 200) {
-
-        diemDoDuc = 70;
 
         nguyenNhan.push(
             "Độ đục cần theo dõi"
@@ -345,16 +312,12 @@ function phanTich() {
 
     if (doMan < 22) {
 
-        diemDoMan = 10;
-
         nguyenNhan.push(
             "Độ mặn giảm mạnh"
         );
 
     }
     else if (doMan < 25) {
-
-        diemDoMan = 30;
 
         nguyenNhan.push(
             "Độ mặn thấp"
@@ -363,25 +326,12 @@ function phanTich() {
     }
     else if (doMan < 28) {
 
-        diemDoMan = 70;
-
         nguyenNhan.push(
             "Độ mặn có xu hướng giảm"
         );
 
     }
 
-    // Risk hiện tại
-
-    risk = Math.round(
-
-        diemNhietDo * 0.4 +
-
-        diemDoDuc * 0.3 +
-
-        diemDoMan * 0.3
-
-    );
     // =========================
     // THÊM NGUYÊN NHÂN
     // =========================
@@ -389,29 +339,17 @@ function phanTich() {
     const nguyenNhanBoSung = [
 
         "Ảnh hưởng nước lũ",
-
         "Nguy cơ nước bạc",
-
         "Rong tảo phát triển mạnh",
-
         "Thức ăn dư thừa tích tụ",
-
         "Bùn đáy tích tụ",
-
         "Xuất hiện khí độc tầng đáy",
-
         "Nắng nóng kéo dài",
-
         "Mưa lớn liên tục",
-
         "Thủy triều bất thường",
-
         "Thiếu lưu thông nước",
-
         "Ô nhiễm hữu cơ cục bộ",
-
         "Chất lượng nước suy giảm",
-
         "Nguy cơ thiếu oxy hòa tan"
 
     ];
@@ -421,21 +359,15 @@ function phanTich() {
         nguyenNhan.push(
 
             nguyenNhanBoSung[
-
                 Math.floor(
-
                     Math.random() *
-
                     nguyenNhanBoSung.length
-
                 )
-
             ]
 
         );
 
     }
-
     // =========================
     // LƯU LỊCH SỬ
     // =========================
@@ -445,21 +377,16 @@ function phanTich() {
     dataHistory.push({
 
         nhietDo,
-
         doDuc,
-
         doMan,
-
         risk
 
     });
 
     if (riskHistory.length > 20)
-
         riskHistory.shift();
 
     if (dataHistory.length > 20)
-
         dataHistory.shift();
 
     chart.data.labels =
@@ -484,22 +411,17 @@ function phanTich() {
 
     let ketQua = "";
 
-    let khuyenNghi = "";
-
     if (risk >= 90) {
 
         ketQua = "🟢 RẤT TỐT";
 
         document.getElementById("den").style.background =
-
             "limegreen";
 
         document.getElementById("textTrangThai").innerHTML =
-
             "RẤT TỐT";
 
         document.getElementById("thanhRisk").style.background =
-
             "limegreen";
 
     }
@@ -509,15 +431,12 @@ function phanTich() {
         ketQua = "🟢 AN TOÀN";
 
         document.getElementById("den").style.background =
-
             "green";
 
         document.getElementById("textTrangThai").innerHTML =
-
             "AN TOÀN";
 
         document.getElementById("thanhRisk").style.background =
-
             "green";
 
     }
@@ -527,15 +446,12 @@ function phanTich() {
         ketQua = "🟡 THEO DÕI";
 
         document.getElementById("den").style.background =
-
             "gold";
 
         document.getElementById("textTrangThai").innerHTML =
-
             "THEO DÕI";
 
         document.getElementById("thanhRisk").style.background =
-
             "gold";
 
     }
@@ -545,15 +461,12 @@ function phanTich() {
         ketQua = "🟠 CẢNH BÁO";
 
         document.getElementById("den").style.background =
-
             "orange";
 
         document.getElementById("textTrangThai").innerHTML =
-
             "CẢNH BÁO";
 
         document.getElementById("thanhRisk").style.background =
-
             "orange";
 
     }
@@ -563,20 +476,17 @@ function phanTich() {
         ketQua = "🔴 NGUY HIỂM";
 
         document.getElementById("den").style.background =
-
             "red";
 
         document.getElementById("textTrangThai").innerHTML =
-
             "NGUY HIỂM";
 
         document.getElementById("thanhRisk").style.background =
-
             "red";
 
     }
-    // =========================
-    // KHUYẾN NGHỊ NGẪU NHIÊN
+        // =========================
+    // KHUYẾN NGHỊ AI
     // =========================
 
     const dsKhuyenNghi = [
@@ -605,35 +515,22 @@ function phanTich() {
 
     ];
 
-    let khuyenNghiDaChon = [];
-
-    while (khuyenNghiDaChon.length < 4) {
+    while (khuyenNghi.length < 4) {
 
         let item = dsKhuyenNghi[
-
             Math.floor(
-
                 Math.random() *
-
                 dsKhuyenNghi.length
-
             )
-
         ];
 
-        if (!khuyenNghiDaChon.includes(item)) {
+        if (!khuyenNghi.includes(item)) {
 
-            khuyenNghiDaChon.push(item);
+            khuyenNghi.push(item);
 
         }
 
     }
-
-    khuyenNghi =
-
-        "• " +
-
-        khuyenNghiDaChon.join("<br>• ");
 
     // =========================
     // DỰ BÁO
@@ -663,41 +560,33 @@ function phanTich() {
 
     ];
 
-    document.getElementById("dubao").innerHTML =
+    document.getElementById("ketqua").innerHTML =
+        ketQua;
 
-        dsDuBao[
+    document.getElementById("khuyennghi").innerHTML =
 
-            Math.floor(
+        "• " +
 
-                Math.random() *
-
-                dsDuBao.length
-
-            )
-
-        ];
-
-    // =========================
-    // HIỂN THỊ
-    // =========================
+        khuyenNghi.join("<br>• ");
 
     document.getElementById("nguyennhan").innerHTML =
 
         nguyenNhan.length === 0
 
-            ? "Không phát hiện yếu tố rủi ro."
+        ? "Không phát hiện yếu tố rủi ro."
 
-            : "• " +
+        : "• " +
 
-              nguyenNhan.join("<br>• ");
+        nguyenNhan.join("<br>• ");
 
-    document.getElementById("ketqua").innerHTML =
+    document.getElementById("dubao").innerHTML =
 
-        ketQua;
-
-    document.getElementById("khuyennghi").innerHTML =
-
-        khuyenNghi;
+        dsDuBao[
+            Math.floor(
+                Math.random() *
+                dsDuBao.length
+            )
+        ];
 
 }
 //=====================================
