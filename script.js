@@ -257,35 +257,35 @@ function phanTich() {
 if (doDuc >= 800) {
 
     nguyenNhan.push(
-        "Độ đục ở mức nguy hiểm, môi trường nước ô nhiễm nghiêm trọng."
+        "Độ đục ở mức NGUY HIỂM."
     );
 
 }
 else if (doDuc >= 400) {
 
     nguyenNhan.push(
-        "Độ đục cao, cần theo dõi chặt chẽ chất lượng nước."
+        "Độ đục ở mức CẢNH BÁO."
     );
 
 }
 else if (doDuc >= 200) {
 
     nguyenNhan.push(
-        "Độ đục tăng, cần tiếp tục theo dõi."
+        "Độ đục ở mức THEO DÕI."
     );
 
 }
 else if (doDuc >= 100) {
 
     nguyenNhan.push(
-        "Độ đục ở mức an toàn."
+        "Độ đục ở mức AN TOÀN."
     );
 
 }
 else {
 
     nguyenNhan.push(
-        "Độ đục rất tốt."
+        "Độ đục ở mức RẤT TỐT."
     );
 
 }
@@ -450,111 +450,129 @@ else {
             "NGUY HIỂM";
 
     }
-    // =========================
-    // KHUYẾN NGHỊ AI
-    // =========================
+// =========================
+// KHUYẾN NGHỊ AI
+// =========================
 
-    const dsKhuyenNghi = [
+let dsKhuyenNghi = [];
 
-        "Nâng lồng nuôi khoảng 0,5 m",
+if (risk <= 20) {
 
-        "Giảm 20% lượng thức ăn",
+    dsKhuyenNghi = [
 
-        "Kiểm tra nguồn nước",
-
-        "Tăng cường lưu thông nước",
-
-        "Theo dõi lại sau 3 giờ",
-
-        "Theo dõi lại sau 6 giờ",
-
-        "Kiểm tra tầng đáy",
-
-        "Vệ sinh lồng nuôi",
-
-        "Quan sát hoạt động bắt mồi",
-
-        "Chuẩn bị phương án di chuyển lồng",
-
-        "Kiểm tra hệ thống neo đậu"
+        "Tiếp tục duy trì chế độ chăm sóc hiện tại.",
+        "Theo dõi các chỉ số định kỳ.",
+        "Cho ăn theo khẩu phần bình thường.",
+        "Kiểm tra môi trường nước mỗi ngày."
 
     ];
 
-    while (khuyenNghi.length < 4) {
+}
+else if (risk <= 40) {
 
-        let item = dsKhuyenNghi[
-            Math.floor(
-                Math.random() *
-                dsKhuyenNghi.length
-            )
-        ];
+    dsKhuyenNghi = [
 
-        if (!khuyenNghi.includes(item)) {
-
-            khuyenNghi.push(item);
-
-        }
-
-    }
-
-    // =========================
-    // DỰ BÁO
-    // =========================
-
-    const dsDuBao = [
-
-        "Môi trường có xu hướng ổn định.",
-
-        "Nguy cơ độ đục tiếp tục tăng.",
-
-        "Nguy cơ giảm độ mặn do mưa lớn.",
-
-        "Điều kiện môi trường thuận lợi.",
-
-        "Nguy cơ xuất hiện nước bạc.",
-
-        "Nguy cơ bùng phát rong tảo.",
-
-        "Nguy cơ thiếu oxy hòa tan.",
-
-        "Chất lượng nước có dấu hiệu suy giảm.",
-
-        "Nhiệt độ có xu hướng tăng.",
-
-        "Môi trường đang cải thiện."
+        "Theo dõi chất lượng nước thường xuyên.",
+        "Kiểm tra hoạt động bắt mồi.",
+        "Điều chỉnh lượng thức ăn nếu cần.",
+        "Theo dõi lại sau 6 giờ."
 
     ];
 
-    document.getElementById("ketqua").innerHTML =
-        ketQua;
+}
+else if (risk <= 65) {
 
-    document.getElementById("khuyennghi").innerHTML =
+    dsKhuyenNghi = [
 
-        "• " +
+        "Giảm 10–20% lượng thức ăn.",
+        "Kiểm tra nguồn nước.",
+        "Vệ sinh lồng nuôi.",
+        "Theo dõi lại sau 3 giờ."
 
-        khuyenNghi.join("<br>• ");
+    ];
 
-    document.getElementById("nguyennhan").innerHTML =
+}
+else if (risk <= 82) {
 
-        nguyenNhan.length === 0
+    dsKhuyenNghi = [
 
-        ? "Không phát hiện yếu tố rủi ro."
+        "Nâng lồng nuôi khoảng 0,5 m.",
+        "Tăng cường lưu thông nước.",
+        "Kiểm tra tầng đáy.",
+        "Chuẩn bị phương án xử lý khẩn cấp."
 
-        : "• " +
+    ];
 
-        nguyenNhan.join("<br>• ");
+}
+else {
 
-    document.getElementById("dubao").innerHTML =
+    dsKhuyenNghi = [
 
-        dsDuBao[
-            Math.floor(
-                Math.random() *
-                dsDuBao.length
-            )
-        ];
+        "Ngừng cho ăn tạm thời.",
+        "Di chuyển lồng nếu cần thiết.",
+        "Tăng cường lưu thông nước.",
+        "Liên hệ cán bộ kỹ thuật để xử lý."
+
+    ];
 
 }
 
+khuyenNghi = dsKhuyenNghi;
+
+// =========================
+// DỰ BÁO
+// =========================
+
+let duBao = "";
+
+if (risk <= 20) {
+
+    duBao =
+        "Môi trường ổn định, các chỉ số dự kiến tiếp tục duy trì ở mức rất tốt.";
+
+}
+else if (risk <= 40) {
+
+    duBao =
+        "Điều kiện môi trường ổn định, cần tiếp tục theo dõi định kỳ.";
+
+}
+else if (risk <= 65) {
+
+    duBao =
+        "Một số chỉ số có xu hướng biến động, cần tăng cường theo dõi trong vài giờ tới.";
+
+}
+else if (risk <= 82) {
+
+    duBao =
+        "Nguy cơ môi trường tiếp tục xấu đi nếu không có biện pháp xử lý kịp thời.";
+
+}
+else {
+
+    duBao =
+        "Nguy cơ xảy ra sự cố môi trường rất cao, cần triển khai ngay các biện pháp khẩn cấp.";
+
+}
+
+document.getElementById("dubao").innerHTML =
+    duBao;
+
+// =========================
+// HIỂN THỊ KẾT QUẢ
+// =========================
+
+document.getElementById("ketqua").innerHTML =
+    ketQua;
+
+document.getElementById("nguyennhan").innerHTML =
+    nguyenNhan.join("<br>");
+
+document.getElementById("khuyennghi").innerHTML =
+    khuyenNghi.join("<br>");
+
+}
 //=====================================
 // Cập nhật vị trí con trỏ Gauge
 //=====================================

@@ -543,15 +543,77 @@ hr{
 
 .gauge-scale{
 
-    display:flex;
+    position:relative;
 
-    justify-content:space-between;
+    height:18px;
+
+    margin-bottom:8px;
 
     font-size:12px;
 
     color:#666;
 
-    margin-bottom:8px;
+}
+
+.gauge-scale span{
+
+    position:absolute;
+
+    transform:translateX(-50%);
+
+}
+
+/* Giá trị đầu */
+
+.gauge-scale span:first-child{
+
+    left:0%;
+
+    transform:none;
+
+}
+
+/* Giá trị cuối */
+
+.gauge-scale span:last-child{
+
+    left:100%;
+
+}
+
+/* ===========================
+   TỈ LỆ RIÊNG CHO TỪNG GAUGE
+=========================== */
+
+/* Nhiệt độ: 20 - 28 - 40 */
+
+.sensor-card:nth-child(1) .gauge-scale span:nth-child(2){
+
+    left:40%;
+
+}
+
+/* Độ đục: 0 - 200 - 1000 */
+
+.sensor-card:nth-child(2) .gauge-scale span:nth-child(2){
+
+    left:20%;
+
+}
+
+/* Độ mặn: 20 - 32 - 40 */
+
+.sensor-card:nth-child(3) .gauge-scale span:nth-child(2){
+
+    left:60%;
+
+}
+
+/* Risk: 0 - 50 - 100 */
+
+.sensor-card:nth-child(4) .gauge-scale span:nth-child(2){
+
+    left:50%;
 
 }
 
@@ -575,17 +637,105 @@ hr{
 
     border-radius:20px;
 
-    background:
-    linear-gradient(
+}
+/* ===========================
+   GAUGE NHIỆT ĐỘ
+=========================== */
+
+.sensor-card:nth-child(1) .gauge-safe{
+
+    background:linear-gradient(
         to right,
-        #00c853 0%,
-        #00c853 20%,
-        #43a047 20%,
-        #43a047 40%,
+        #0b8f2d 0%,
+        #0b8f2d 20%,
+
+        #7ed957 20%,
+        #7ed957 40%,
+
+        #fdd835 40%,
+        #fdd835 60%,
+
+        #fb8c00 60%,
+        #fb8c00 80%,
+
+        #e53935 80%,
+        #e53935 100%
+    );
+
+}
+
+/* ===========================
+   GAUGE ĐỘ ĐỤC
+=========================== */
+
+.sensor-card:nth-child(2) .gauge-safe{
+
+    background:linear-gradient(
+        to right,
+        #0b8f2d 0%,
+        #0b8f2d 10%,
+
+        #7ed957 10%,
+        #7ed957 20%,
+
+        #fdd835 20%,
+        #fdd835 40%,
+
+        #fb8c00 40%,
+        #fb8c00 80%,
+
+        #e53935 80%,
+        #e53935 100%
+    );
+
+}
+
+/* ===========================
+   GAUGE ĐỘ MẶN
+=========================== */
+
+.sensor-card:nth-child(3) .gauge-safe{
+
+    background:linear-gradient(
+        to right,
+        #0b8f2d 0%,
+        #0b8f2d 20%,
+
+        #7ed957 20%,
+        #7ed957 60%,
+
+        #fdd835 60%,
+        #fdd835 75%,
+
+        #fb8c00 75%,
+        #fb8c00 90%,
+
+        #e53935 90%,
+        #e53935 100%
+    );
+
+}
+
+/* ===========================
+   GAUGE RISK
+=========================== */
+
+.sensor-card:nth-child(4) .gauge-safe{
+
+    background:linear-gradient(
+        to right,
+        #0b8f2d 0%,
+        #0b8f2d 20%,
+
+        #7ed957 20%,
+        #7ed957 40%,
+
         #fdd835 40%,
         #fdd835 65%,
+
         #fb8c00 65%,
         #fb8c00 82%,
+
         #e53935 82%,
         #e53935 100%
     );
@@ -623,7 +773,7 @@ hr{
 
     position:absolute;
 
-    left:40%;
+    left:20%;
 
     top:-5px;
 
@@ -634,7 +784,33 @@ hr{
     background:#222;
 
 }
+/* ===========================
+   VỊ TRÍ VẠCH CHUẨN
+=========================== */
 
+.temp-standard{
+
+    left:40%;
+
+}
+
+.turbidity-standard{
+
+    left:20%;
+
+}
+
+.salinity-standard{
+
+    left:60%;
+
+}
+
+.risk-standard{
+
+    left:50%;
+
+}
 .gauge-label{
 
     text-align:center;
@@ -644,6 +820,83 @@ hr{
     color:#444;
 
     margin-top:6px;
+
+}
+/* ===========================
+   VỊ TRÍ CHỮ CHUẨN
+=========================== */
+
+.temp-label,
+.turbidity-label,
+.salinity-label,
+.risk-label{
+
+    position:relative;
+
+    height:18px;
+
+}
+
+.temp-label span{
+
+    position:absolute;
+
+    left:40%;
+
+    transform:translateX(-50%);
+
+}
+
+.turbidity-label span{
+
+    position:absolute;
+
+    left:20%;
+
+    top:6px;
+
+    transform:translateX(-50%);
+
+}
+
+.salinity-label span{
+
+    position:absolute;
+
+    left:60%;
+
+    transform:translateX(-50%);
+
+}
+
+.risk-label span{
+
+    position:absolute;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+}
+/* Chỉ dùng riêng cho gauge Độ đục */
+
+.turbidity-label{
+
+    position:relative;
+
+    height:18px;
+
+}
+
+.turbidity-label span{
+
+    position:absolute;
+
+    left:20%;
+
+    top:6px;
+
+    transform:translateX(-50%);
 
 }
 
