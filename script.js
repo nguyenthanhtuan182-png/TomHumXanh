@@ -228,14 +228,46 @@ risk = 100 - riskRaw;
     );
 
     updatePointer(
-        "riskPointer",
-        risk,
-        0,
-        100
-    );
+    "riskPointer",
+    risk,
+    0,
+    100
+);
 
-    document.getElementById("thanhRisk").style.width =
-        risk + "%";
+document.getElementById("thanhRisk").style.width =
+    risk + "%";
+
+// =========================
+// MÀU THANH RỦI RO
+// =========================
+
+const thanhRisk = document.getElementById("thanhRisk");
+
+if (risk <= 10) {
+
+    thanhRisk.style.background = "limegreen";
+
+}
+else if (risk <= 20) {
+
+    thanhRisk.style.background = "green";
+
+}
+else if (risk <= 30) {
+
+    thanhRisk.style.background = "gold";
+
+}
+else if (risk <= 50) {
+
+    thanhRisk.style.background = "orange";
+
+}
+else {
+
+    thanhRisk.style.background = "red";
+
+}
 
 }
 // ===============================
@@ -425,10 +457,7 @@ else if (doDuc >= 200) {
 
     document.getElementById("textTrangThai").innerHTML =
         "RẤT TỐT";
-
-    document.getElementById("thanhRisk").style.background =
-        "limegreen";
-
+  
 }
 else if (risk <= 20) {
 
@@ -440,9 +469,7 @@ else if (risk <= 20) {
     document.getElementById("textTrangThai").innerHTML =
         "AN TOÀN";
 
-    document.getElementById("thanhRisk").style.background =
-        "green";
-
+    
 }
 else if (risk <= 30) {
 
@@ -454,9 +481,7 @@ else if (risk <= 30) {
     document.getElementById("textTrangThai").innerHTML =
         "THEO DÕI";
 
-    document.getElementById("thanhRisk").style.background =
-        "gold";
-
+ 
 }
 else if (risk <= 50) {
 
@@ -467,9 +492,6 @@ else if (risk <= 50) {
 
     document.getElementById("textTrangThai").innerHTML =
         "CẢNH BÁO";
-
-    document.getElementById("thanhRisk").style.background =
-        "orange";
 
 }
 else {
@@ -482,9 +504,7 @@ else {
     document.getElementById("textTrangThai").innerHTML =
         "NGUY HIỂM";
 
-    document.getElementById("thanhRisk").style.background =
-        "red";
-
+ 
 }
         // =========================
     // KHUYẾN NGHỊ AI
