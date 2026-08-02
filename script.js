@@ -234,45 +234,37 @@ risk = 100 - riskRaw;
     100
 );
 
-document.getElementById("thanhRisk").style.width =
-    risk + "%";
-
-// =========================
-// MÀU THANH RỦI RO
-// =========================
-
 const thanhRisk = document.getElementById("thanhRisk");
 
-thanhRisk.removeAttribute("style");
-
+// Cập nhật chiều dài
 thanhRisk.style.width = risk + "%";
 
+// Cập nhật màu
 if (risk <= 10) {
 
-    thanhRisk.style.backgroundColor = "limegreen";
+    thanhRisk.style.backgroundColor = "#2ecc71";
 
 }
 else if (risk <= 20) {
 
-    thanhRisk.style.backgroundColor = "green";
+    thanhRisk.style.backgroundColor = "#27ae60";
 
 }
 else if (risk <= 30) {
 
-    thanhRisk.style.backgroundColor = "gold";
+    thanhRisk.style.backgroundColor = "#f1c40f";
 
 }
 else if (risk <= 50) {
 
-    thanhRisk.style.backgroundColor = "orange";
+    thanhRisk.style.backgroundColor = "#e67e22";
 
 }
 else {
 
-    thanhRisk.style.backgroundColor = "red";
+    thanhRisk.style.backgroundColor = "#e74c3c";
 
 }
-
 }
 // ===============================
 // PHÂN TÍCH MÔI TRƯỜNG
