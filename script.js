@@ -166,14 +166,20 @@ function capNhatDuLieu() {
 
     let diemDoDuc = 100;
 
-    if (doDuc >= 800)
-        diemDoDuc = 10;
-    else if (doDuc >= 600)
-        diemDoDuc = 30;
-    else if (doDuc >= 400)
-        diemDoDuc = 50;
-    else if (doDuc >= 200)
-        diemDoDuc = 70;
+// 0 - 99 : RẤT TỐT
+// 100 - 199 : AN TOÀN
+// 200 - 399 : THEO DÕI
+// 400 - 799 : CẢNH BÁO
+// >= 800 : NGUY HIỂM
+
+if (doDuc >= 800)
+    diemDoDuc = 10;
+else if (doDuc >= 400)
+    diemDoDuc = 30;
+else if (doDuc >= 200)
+    diemDoDuc = 50;
+else if (doDuc >= 100)
+    diemDoDuc = 70;
 
     let diemDoMan = 100;
 
