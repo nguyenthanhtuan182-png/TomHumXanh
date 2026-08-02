@@ -51,7 +51,21 @@ updatePointer(
     0,
     1000
 );
+//==============================
+// ĐỘ MẶN
+//==============================
 
+window.tds = Number(data.tds || 0);
+
+document.getElementById("doman").innerHTML =
+    window.tds.toFixed(1) + "‰";
+
+updatePointer(
+    "salinityPointer",
+    window.tds,
+    20,
+    40
+);
 // Chỉ cập nhật chỉ số.
 // Không tự động phân tích môi trường.
 
