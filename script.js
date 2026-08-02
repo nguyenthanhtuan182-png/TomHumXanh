@@ -590,12 +590,18 @@ else {
 
 function updatePointer(id, value, min, max) {
 
+    const pointer = document.getElementById(id);
+
+    if (!pointer) {
+        console.error("Không tìm thấy:", id);
+        return;
+    }
+
     let percent = (value - min) / (max - min) * 100;
 
     percent = Math.max(0, Math.min(100, percent));
 
-    document.getElementById(id).style.left =
-        percent + "%";
+    pointer.style.left = percent + "%";
 
 }
 
