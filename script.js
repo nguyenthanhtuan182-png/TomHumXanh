@@ -244,15 +244,6 @@ risk = 100 - riskRaw;
     100
 );
 
-updatePointer(
-    "riskBarPointer",
-    risk,
-    0,
-    100
-);
-
-document.getElementById("riskValueBar").innerHTML =
-    risk;
 }
 // ===============================
 // PHÂN TÍCH MÔI TRƯỜNG
