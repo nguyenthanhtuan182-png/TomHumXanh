@@ -251,38 +251,44 @@ function phanTich() {
     }
 
     // =========================
-    // ĐỘ ĐỤC
-    // =========================
+// ĐỘ ĐỤC
+// =========================
 
-    if (doDuc >= 800) {
+if (doDuc >= 800) {
 
-        nguyenNhan.push(
-            "Nước trong bất thường, nguy cơ môi trường tăng"
-        );
+    nguyenNhan.push(
+        "Độ đục ở mức nguy hiểm, môi trường nước ô nhiễm nghiêm trọng."
+    );
 
-    }
-    else if (doDuc >= 600) {
+}
+else if (doDuc >= 400) {
 
-        nguyenNhan.push(
-            "Nước khá trong, cần theo dõi"
-        );
+    nguyenNhan.push(
+        "Độ đục cao, cần theo dõi chặt chẽ chất lượng nước."
+    );
 
-    }
-    else if (doDuc >= 400) {
+}
+else if (doDuc >= 200) {
 
-        nguyenNhan.push(
-            "Chất lượng nước ở mức trung bình"
-        );
+    nguyenNhan.push(
+        "Độ đục tăng, cần tiếp tục theo dõi."
+    );
 
-    }
-    else if (doDuc >= 200) {
+}
+else if (doDuc >= 100) {
 
-        nguyenNhan.push(
-            "Nước đục, môi trường ổn định"
-        );
+    nguyenNhan.push(
+        "Độ đục ở mức an toàn."
+    );
 
-    }
+}
+else {
 
+    nguyenNhan.push(
+        "Độ đục rất tốt."
+    );
+
+}
     // =========================
     // ĐỘ MẶN
     // =========================
