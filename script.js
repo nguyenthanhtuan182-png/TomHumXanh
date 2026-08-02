@@ -42,29 +42,25 @@ window.onload = function () {
 
             labels: [],
 
-            datasets: [
+            datasets: [{
 
-                {
+                label: "Chỉ số rủi ro",
 
-                    label: "Chỉ số rủi ro",
+                data: [],
 
-                    data: [],
+                borderColor: "#0077cc",
 
-                    borderColor: "#0077cc",
+                backgroundColor: "rgba(0,119,204,0.15)",
 
-                    backgroundColor: "rgba(0,119,204,0.15)",
+                borderWidth: 3,
 
-                    borderWidth: 3,
+                fill: true,
 
-                    fill: true,
+                tension: 0.3,
 
-                    tension: 0.3,
+                pointRadius: 4
 
-                    pointRadius: 4
-
-                }
-
-            ]
+            }]
 
         },
 
@@ -124,11 +120,12 @@ function showPage(page) {
     }
 
 }
-function capNhatDuLieu() {
 
-    // =========================
-    // ĐỌC DỮ LIỆU FIREBASE
-    // =========================
+// ===============================
+// CẬP NHẬT DỮ LIỆU
+// ===============================
+
+function capNhatDuLieu() {
 
     nhietDo = Number(window.nhietDo || 0);
 
@@ -139,19 +136,11 @@ function capNhatDuLieu() {
 
     doMan = Number(window.tds || 32);
 
-// Nếu chưa có cảm biến độ mặn
-// hoặc Firebase chưa gửi dữ liệu
-// thì dùng giá trị chuẩn giả lập
+    if (doMan <= 0) {
 
-if (doMan <= 0) {
+        doMan = 32;
 
-    doMan = 32;
-
-}
-
-    // =========================
-    // HIỂN THỊ CHỈ SỐ
-    // =========================
+    }
 
     document.getElementById("nhietdo").innerHTML =
         nhietDo.toFixed(1) + "°C";
@@ -195,54 +184,24 @@ if (doMan <= 0) {
     else if (doMan < 28)
         diemDoMan = 70;
 
-   let riskRaw = Math.round(
+    let riskRaw = Math.round(
 
-    diemNhietDo * 0.4 +
+        diemNhietDo * 0.4 +
 
-    diemDoDuc * 0.3 +
+        diemDoDuc * 0.3 +
 
-    diemDoMan * 0.3
+        diemDoMan * 0.3
 
-);
+    );
 
-// Đảo chiều Risk:
-// 0 = An toàn
-// 100 = Nguy hiểm
+    risk = 100 - riskRaw;
 
-risk = 100 - riskRaw;
     document.getElementById("risk").innerHTML = risk;
 
-    // =========================
-    // CẬP NHẬT ĐỒNG HỒ
-    // =========================
-
-    updatePointer(
-        "tempPointer",
-        nhietDo,
-        20,
-        40
-    );
-
-    updatePointer(
-        "turbidityPointer",
-        doDuc,
-        0,
-        1000
-    );
-
-    updatePointer(
-        "salinityPointer",
-        doMan,
-        20,
-        40
-    );
-
-    updatePointer(
-    "riskPointer",
-    risk,
-    0,
-    100
-);
+    updatePointer("tempPointer", nhietDo, 20, 40);
+    updatePointer("turbidityPointer", doDuc, 0, 1000);
+    updatePointer("salinityPointer", doMan, 20, 40);
+    updatePointer("riskPointer", risk, 0, 100);
 
 }
 // ===============================
@@ -286,37 +245,37 @@ function phanTich() {
     }
 
     // =========================
-// ĐỘ ĐỤC
-// =========================
+    // ĐỘ ĐỤC
+    // =========================
 
-if (doDuc >= 800) {
+    if (doDuc >= 800) {
 
-    nguyenNhan.push(
-        "Nước trong bất thường, nguy cơ môi trường tăng"
-    );
+        nguyenNhan.push(
+            "Nước trong bất thường, nguy cơ môi trường tăng"
+        );
 
-}
-else if (doDuc >= 600) {
+    }
+    else if (doDuc >= 600) {
 
-    nguyenNhan.push(
-        "Nước khá trong, cần theo dõi"
-    );
+        nguyenNhan.push(
+            "Nước khá trong, cần theo dõi"
+        );
 
-}
-else if (doDuc >= 400) {
+    }
+    else if (doDuc >= 400) {
 
-    nguyenNhan.push(
-        "Chất lượng nước ở mức trung bình"
-    );
+        nguyenNhan.push(
+            "Chất lượng nước ở mức trung bình"
+        );
 
-}
-else if (doDuc >= 200) {
+    }
+    else if (doDuc >= 200) {
 
-    nguyenNhan.push(
-        "Nước đục, môi trường ổn định"
-    );
+        nguyenNhan.push(
+            "Nước đục, môi trường ổn định"
+        );
 
-}
+    }
 
     // =========================
     // ĐỘ MẶN
@@ -380,6 +339,7 @@ else if (doDuc >= 200) {
         );
 
     }
+
     // =========================
     // LƯU LỊCH SỬ
     // =========================
@@ -418,67 +378,67 @@ else if (doDuc >= 200) {
     capNhatBang();
 
     // =========================
-// PHÂN LOẠI
-// =========================
+    // PHÂN LOẠI
+    // =========================
 
-let ketQua = "";
+    let ketQua = "";
 
-if (risk <= 20) {
+    if (risk <= 20) {
 
-    ketQua = "🟢 RẤT TỐT";
+        ketQua = "🟢 RẤT TỐT";
 
-    document.getElementById("den").style.background =
-        "limegreen";
+        document.getElementById("den").style.background =
+            "limegreen";
 
-    document.getElementById("textTrangThai").innerHTML =
-        "RẤT TỐT";
+        document.getElementById("textTrangThai").innerHTML =
+            "RẤT TỐT";
 
-}
-else if (risk <= 40) {
+    }
+    else if (risk <= 40) {
 
-    ketQua = "🟢 AN TOÀN";
+        ketQua = "🟢 AN TOÀN";
 
-    document.getElementById("den").style.background =
-        "green";
+        document.getElementById("den").style.background =
+            "green";
 
-    document.getElementById("textTrangThai").innerHTML =
-        "AN TOÀN";
+        document.getElementById("textTrangThai").innerHTML =
+            "AN TOÀN";
 
-}
-else if (risk <= 65) {
+    }
+    else if (risk <= 65) {
 
-    ketQua = "🟡 THEO DÕI";
+        ketQua = "🟡 THEO DÕI";
 
-    document.getElementById("den").style.background =
-        "gold";
+        document.getElementById("den").style.background =
+            "gold";
 
-    document.getElementById("textTrangThai").innerHTML =
-        "THEO DÕI";
+        document.getElementById("textTrangThai").innerHTML =
+            "THEO DÕI";
 
-}
-else if (risk <= 82) {
+    }
+    else if (risk <= 82) {
 
-    ketQua = "🟠 CẢNH BÁO";
+        ketQua = "🟠 CẢNH BÁO";
 
-    document.getElementById("den").style.background =
-        "orange";
+        document.getElementById("den").style.background =
+            "orange";
 
-    document.getElementById("textTrangThai").innerHTML =
-        "CẢNH BÁO";
+        document.getElementById("textTrangThai").innerHTML =
+            "CẢNH BÁO";
 
-}
-else {
+    }
+    else {
 
-    ketQua = "🔴 NGUY HIỂM";
+        ketQua = "🔴 NGUY HIỂM";
 
-    document.getElementById("den").style.background =
-        "red";
+        document.getElementById("den").style.background =
+            "red";
 
-    document.getElementById("textTrangThai").innerHTML =
-        "NGUY HIỂM";
+        document.getElementById("textTrangThai").innerHTML =
+            "NGUY HIỂM";
 
-}
-        // =========================
+    }
+    // =========================
     // KHUYẾN NGHỊ AI
     // =========================
 
@@ -582,6 +542,7 @@ else {
         ];
 
 }
+
 //=====================================
 // Cập nhật vị trí con trỏ Gauge
 //=====================================
@@ -590,16 +551,23 @@ function updatePointer(id, value, min, max) {
 
     const pointer = document.getElementById(id);
 
-    if (!pointer) {
-        console.error("Không tìm thấy:", id);
-        return;
-    }
+    if (!pointer) return;
 
-    let percent = (value - min) / (max - min) * 100;
+    let percent =
 
-    percent = Math.max(0, Math.min(100, percent));
+        (value - min) /
 
-    pointer.style.left = percent + "%";
+        (max - min) * 100;
+
+    percent =
+
+        Math.max(
+            0,
+            Math.min(100, percent)
+        );
+
+    pointer.style.left =
+        percent + "%";
 
 }
 
