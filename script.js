@@ -137,7 +137,17 @@ function capNhatDuLieu() {
     if (doDuc < 0) doDuc = 0;
     if (doDuc > 1000) doDuc = 1000;
 
-    doMan = Number(window.tds || 0);
+    doMan = Number(window.tds || 32);
+
+// Nếu chưa có cảm biến độ mặn
+// hoặc Firebase chưa gửi dữ liệu
+// thì dùng giá trị chuẩn giả lập
+
+if (doMan <= 0) {
+
+    doMan = 32;
+
+}
 
     // =========================
     // HIỂN THỊ CHỈ SỐ
