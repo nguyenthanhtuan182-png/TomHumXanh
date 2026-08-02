@@ -243,29 +243,33 @@ document.getElementById("thanhRisk").style.width =
 
 const thanhRisk = document.getElementById("thanhRisk");
 
+thanhRisk.removeAttribute("style");
+
+thanhRisk.style.width = risk + "%";
+
 if (risk <= 10) {
 
-    thanhRisk.style.background = "limegreen";
+    thanhRisk.style.backgroundColor = "limegreen";
 
 }
 else if (risk <= 20) {
 
-    thanhRisk.style.background = "green";
+    thanhRisk.style.backgroundColor = "green";
 
 }
 else if (risk <= 30) {
 
-    thanhRisk.style.background = "gold";
+    thanhRisk.style.backgroundColor = "gold";
 
 }
 else if (risk <= 50) {
 
-    thanhRisk.style.background = "orange";
+    thanhRisk.style.backgroundColor = "orange";
 
 }
 else {
 
-    thanhRisk.style.background = "red";
+    thanhRisk.style.backgroundColor = "red";
 
 }
 
