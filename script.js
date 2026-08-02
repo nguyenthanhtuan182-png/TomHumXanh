@@ -427,12 +427,12 @@ else if (doDuc >= 200) {
     capNhatBang();
 
     // =========================
-    // PHÂN LOẠI
-    // =========================
+// PHÂN LOẠI
+// =========================
 
-    let ketQua = "";
+let ketQua = "";
 
-    if (risk <= 10) {
+if (risk <= 20) {
 
     ketQua = "🟢 RẤT TỐT";
 
@@ -441,9 +441,9 @@ else if (doDuc >= 200) {
 
     document.getElementById("textTrangThai").innerHTML =
         "RẤT TỐT";
-  
+
 }
-else if (risk <= 20) {
+else if (risk <= 40) {
 
     ketQua = "🟢 AN TOÀN";
 
@@ -453,9 +453,8 @@ else if (risk <= 20) {
     document.getElementById("textTrangThai").innerHTML =
         "AN TOÀN";
 
-    
 }
-else if (risk <= 30) {
+else if (risk <= 65) {
 
     ketQua = "🟡 THEO DÕI";
 
@@ -465,9 +464,8 @@ else if (risk <= 30) {
     document.getElementById("textTrangThai").innerHTML =
         "THEO DÕI";
 
- 
 }
-else if (risk <= 50) {
+else if (risk <= 82) {
 
     ketQua = "🟠 CẢNH BÁO";
 
@@ -488,7 +486,6 @@ else {
     document.getElementById("textTrangThai").innerHTML =
         "NGUY HIỂM";
 
- 
 }
         // =========================
     // KHUYẾN NGHỊ AI

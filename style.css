@@ -660,10 +660,26 @@ hr{
     background:
     linear-gradient(
         to right,
-        #27ae60 0%,
-        #27ae60 65%,
-        #f1c40f 82%,
-        #e74c3c 100%
+
+        /* RẤT TỐT */
+        #00c853 0%,
+        #00c853 20%,
+
+        /* AN TOÀN */
+        #43a047 20%,
+        #43a047 40%,
+
+        /* THEO DÕI */
+        #fdd835 40%,
+        #fdd835 65%,
+
+        /* CẢNH BÁO */
+        #fb8c00 65%,
+        #fb8c00 82%,
+
+        /* NGUY HIỂM */
+        #e53935 82%,
+        #e53935 100%
     );
 
 }
