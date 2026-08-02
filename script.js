@@ -234,37 +234,15 @@ risk = 100 - riskRaw;
     100
 );
 
-const thanhRisk = document.getElementById("thanhRisk");
+updatePointer(
+    "riskBarPointer",
+    risk,
+    0,
+    100
+);
 
-// Cập nhật chiều dài
-thanhRisk.style.width = risk + "%";
-
-// Cập nhật màu
-if (risk <= 10) {
-
-    thanhRisk.style.backgroundColor = "#2ecc71";
-
-}
-else if (risk <= 20) {
-
-    thanhRisk.style.backgroundColor = "#27ae60";
-
-}
-else if (risk <= 30) {
-
-    thanhRisk.style.backgroundColor = "#f1c40f";
-
-}
-else if (risk <= 50) {
-
-    thanhRisk.style.backgroundColor = "#e67e22";
-
-}
-else {
-
-    thanhRisk.style.backgroundColor = "#e74c3c";
-
-}
+document.getElementById("riskValueBar").innerHTML =
+    risk;
 }
 // ===============================
 // PHÂN TÍCH MÔI TRƯỜNG
