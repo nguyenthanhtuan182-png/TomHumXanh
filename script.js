@@ -152,55 +152,10 @@ function capNhatDuLieu() {
         doMan.toFixed(1) + "‰";
 
     // =========================
-    // TÍNH RISK INDEX
-    // =========================
+// NHẬN RISK TỪ ESP32
+// =========================
 
-    let diemNhietDo = 100;
-
-    if (nhietDo > 34)
-        diemNhietDo = 10;
-    else if (nhietDo > 32)
-        diemNhietDo = 30;
-    else if (nhietDo > 30)
-        diemNhietDo = 70;
-
-    let diemDoDuc = 100;
-
-// 0 - 99 : RẤT TỐT
-// 100 - 199 : AN TOÀN
-// 200 - 399 : THEO DÕI
-// 400 - 799 : CẢNH BÁO
-// >= 800 : NGUY HIỂM
-
-if (doDuc >= 800)
-    diemDoDuc = 10;
-else if (doDuc >= 400)
-    diemDoDuc = 30;
-else if (doDuc >= 200)
-    diemDoDuc = 50;
-else if (doDuc >= 100)
-    diemDoDuc = 70;
-
-    let diemDoMan = 100;
-
-    if (doMan < 22)
-        diemDoMan = 10;
-    else if (doMan < 25)
-        diemDoMan = 30;
-    else if (doMan < 28)
-        diemDoMan = 70;
-
-    let riskRaw = Math.round(
-
-        diemNhietDo * 0.4 +
-
-        diemDoDuc * 0.3 +
-
-        diemDoMan * 0.3
-
-    );
-
-    risk = 100 - riskRaw;
+risk = Number(window.risk || 0);
 
     document.getElementById("risk").innerHTML = risk;
 
@@ -225,96 +180,87 @@ function phanTich() {
     let khuyenNghi = [];
 
     // =========================
-    // NHIỆT ĐỘ
-    // =========================
+// NHIỆT ĐỘ
+// =========================
 
-    if (nhietDo > 34) {
+if (nhietDo < 26) {
 
-        nguyenNhan.push(
-            "Nhiệt độ nước vượt ngưỡng an toàn"
-        );
+    nguyenNhan.push(
+        "Nhiệt độ nước thấp hơn ngưỡng tối ưu."
+    );
 
-    }
-    else if (nhietDo > 32) {
+}
+else if (nhietDo > 34) {
 
-        nguyenNhan.push(
-            "Nhiệt độ nước đang ở mức rất cao"
-        );
+    nguyenNhan.push(
+        "Nhiệt độ nước ở mức rất cao."
+    );
 
-    }
-    else if (nhietDo > 30) {
+}
+else if (nhietDo > 32) {
 
-        nguyenNhan.push(
-            "Nhiệt độ nước đang tăng"
-        );
+    nguyenNhan.push(
+        "Nhiệt độ nước đang cao hơn mức tối ưu."
+    );
 
-    }
+}
+else if (nhietDo > 30) {
 
-    // =========================
+    nguyenNhan.push(
+        "Nhiệt độ nước có xu hướng tăng."
+    );
+
+}
+  // =========================
 // ĐỘ ĐỤC
 // =========================
 
-if (doDuc >= 800) {
+if (doDuc > 750) {
 
     nguyenNhan.push(
-        "Độ đục ở mức NGUY HIỂM."
+        "Độ đục ở mức rất cao."
     );
 
 }
-else if (doDuc >= 400) {
+else if (doDuc > 500) {
 
     nguyenNhan.push(
-        "Độ đục ở mức CẢNH BÁO."
+        "Độ đục cao, môi trường nước đang suy giảm."
     );
 
 }
-else if (doDuc >= 200) {
+else if (doDuc > 250) {
 
     nguyenNhan.push(
-        "Độ đục ở mức THEO DÕI."
+        "Độ đục tăng, cần theo dõi."
     );
 
 }
-else if (doDuc >= 100) {
+   // =========================
+// ĐỘ MẶN
+// =========================
+
+if (doMan < 24) {
 
     nguyenNhan.push(
-        "Độ đục ở mức AN TOÀN."
+        "Độ mặn rất thấp."
     );
 
 }
-else {
+else if (doMan < 28) {
 
     nguyenNhan.push(
-        "Độ đục ở mức RẤT TỐT."
+        "Độ mặn thấp hơn mức tối ưu."
     );
 
 }
-    // =========================
-    // ĐỘ MẶN
-    // =========================
+else if (doMan > 35) {
 
-    if (doMan < 22) {
+    nguyenNhan.push(
+        "Độ mặn cao hơn mức tối ưu."
+    );
 
-        nguyenNhan.push(
-            "Độ mặn giảm mạnh"
-        );
-
-    }
-    else if (doMan < 25) {
-
-        nguyenNhan.push(
-            "Độ mặn thấp"
-        );
-
-    }
-    else if (doMan < 28) {
-
-        nguyenNhan.push(
-            "Độ mặn có xu hướng giảm"
-        );
-
-    }
-
+}
     // =========================
     // THÊM NGUYÊN NHÂN
     // =========================
@@ -395,111 +341,62 @@ else {
 
     let ketQua = "";
 
-    if (risk <= 20) {
+    if (risk <= 50) {
 
-        ketQua = "🟢 RẤT TỐT";
+    ketQua = "🟢 BÌNH THƯỜNG";
 
-        document.getElementById("den").style.background =
-            "limegreen";
+    document.getElementById("den").style.background = "limegreen";
 
-        document.getElementById("textTrangThai").innerHTML =
-            "RẤT TỐT";
+    document.getElementById("textTrangThai").innerHTML =
+        "BÌNH THƯỜNG";
 
-    }
-    else if (risk <= 40) {
+}
+else if (risk < 70) {
 
-        ketQua = "🟢 AN TOÀN";
+    ketQua = "🟡 CẢNH BÁO";
 
-        document.getElementById("den").style.background =
-            "green";
+    document.getElementById("den").style.background = "gold";
 
-        document.getElementById("textTrangThai").innerHTML =
-            "AN TOÀN";
+    document.getElementById("textTrangThai").innerHTML =
+        "CẢNH BÁO";
 
-    }
-    else if (risk <= 65) {
+}
+else {
 
-        ketQua = "🟡 THEO DÕI";
+    ketQua = "🔴 NGUY HIỂM";
 
-        document.getElementById("den").style.background =
-            "gold";
+    document.getElementById("den").style.background = "red";
 
-        document.getElementById("textTrangThai").innerHTML =
-            "THEO DÕI";
+    document.getElementById("textTrangThai").innerHTML =
+        "NGUY HIỂM";
 
-    }
-    else if (risk <= 82) {
-
-        ketQua = "🟠 CẢNH BÁO";
-
-        document.getElementById("den").style.background =
-            "orange";
-
-        document.getElementById("textTrangThai").innerHTML =
-            "CẢNH BÁO";
-
-    }
-    else {
-
-        ketQua = "🔴 NGUY HIỂM";
-
-        document.getElementById("den").style.background =
-            "red";
-
-        document.getElementById("textTrangThai").innerHTML =
-            "NGUY HIỂM";
-
-    }
+}
 // =========================
 // KHUYẾN NGHỊ AI
 // =========================
 
 let dsKhuyenNghi = [];
 
-if (risk <= 20) {
+if (risk <= 50) {
 
     dsKhuyenNghi = [
 
+        "Môi trường đang ở mức an toàn.",
         "Tiếp tục duy trì chế độ chăm sóc hiện tại.",
-        "Theo dõi các chỉ số định kỳ.",
         "Cho ăn theo khẩu phần bình thường.",
-        "Kiểm tra môi trường nước mỗi ngày."
+        "Theo dõi các chỉ số môi trường định kỳ."
 
     ];
 
 }
-else if (risk <= 40) {
-
-    dsKhuyenNghi = [
-
-        "Theo dõi chất lượng nước thường xuyên.",
-        "Kiểm tra hoạt động bắt mồi.",
-        "Điều chỉnh lượng thức ăn nếu cần.",
-        "Theo dõi lại sau 6 giờ."
-
-    ];
-
-}
-else if (risk <= 65) {
+else if (risk < 70) {
 
     dsKhuyenNghi = [
 
         "Giảm 10–20% lượng thức ăn.",
-        "Kiểm tra nguồn nước.",
-        "Vệ sinh lồng nuôi.",
-        "Theo dõi lại sau 3 giờ."
-
-    ];
-
-}
-else if (risk <= 82) {
-
-    dsKhuyenNghi = [
-
-        "Nâng lồng nuôi khoảng 0,5 m.",
-        "Tăng cường lưu thông nước.",
-        "Kiểm tra tầng đáy.",
-        "Chuẩn bị phương án xử lý khẩn cấp."
+        "Kiểm tra chất lượng nước và vệ sinh lồng nuôi.",
+        "Theo dõi diễn biến môi trường trong 2–3 giờ tới.",
+        "Chuẩn bị phương án xử lý nếu chỉ số Risk tiếp tục tăng."
 
     ];
 
@@ -509,56 +406,42 @@ else {
     dsKhuyenNghi = [
 
         "Ngừng cho ăn tạm thời.",
-        "Di chuyển lồng nếu cần thiết.",
-        "Tăng cường lưu thông nước.",
-        "Liên hệ cán bộ kỹ thuật để xử lý."
+        "Nâng lồng nuôi hoặc di chuyển đến vùng nước an toàn nếu cần.",
+        "Tăng cường lưu thông nước và kiểm tra tầng đáy.",
+        "Triển khai ngay các biện pháp xử lý môi trường."
 
     ];
 
 }
 
 khuyenNghi = dsKhuyenNghi;
-
 // =========================
 // DỰ BÁO
 // =========================
 
 let duBao = "";
 
-if (risk <= 20) {
+if (risk <= 50) {
 
     duBao =
-        "Môi trường ổn định, các chỉ số dự kiến tiếp tục duy trì ở mức rất tốt.";
+        "Môi trường đang ổn định, các chỉ số dự kiến tiếp tục duy trì trong ngưỡng an toàn nếu điều kiện thời tiết không có biến động lớn.";
 
 }
-else if (risk <= 40) {
+else if (risk < 70) {
 
     duBao =
-        "Điều kiện môi trường ổn định, cần tiếp tục theo dõi định kỳ.";
-
-}
-else if (risk <= 65) {
-
-    duBao =
-        "Một số chỉ số có xu hướng biến động, cần tăng cường theo dõi trong vài giờ tới.";
-
-}
-else if (risk <= 82) {
-
-    duBao =
-        "Nguy cơ môi trường tiếp tục xấu đi nếu không có biện pháp xử lý kịp thời.";
+        "Một hoặc nhiều chỉ số môi trường đang có xu hướng bất lợi. Nếu không được theo dõi và xử lý kịp thời, chỉ số Risk có thể tiếp tục tăng trong thời gian tới.";
 
 }
 else {
 
     duBao =
-        "Nguy cơ xảy ra sự cố môi trường rất cao, cần triển khai ngay các biện pháp khẩn cấp.";
+        "Nguy cơ môi trường tiếp tục xấu đi ở mức cao. Nếu không triển khai biện pháp xử lý ngay, tôm hùm có thể bị sốc môi trường, giảm bắt mồi và tăng nguy cơ phát sinh dịch bệnh.";
 
 }
 
 document.getElementById("dubao").innerHTML =
     duBao;
-
 // =========================
 // HIỂN THỊ KẾT QUẢ
 // =========================

@@ -66,6 +66,13 @@ updatePointer(
     20,
     40
 );
+
+//==============================
+// CHỈ SỐ RISK (LẤY TỪ ESP32)
+//==============================
+
+window.risk = Number(data.risk || 0);
+window.state = String(data.state || "safe");
 // Chỉ cập nhật chỉ số.
 // Không tự động phân tích môi trường.
 

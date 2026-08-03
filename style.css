@@ -581,51 +581,91 @@ hr{
 
 }
 
-/* ===========================
-   TỈ LỆ RIÊNG CHO TỪNG GAUGE
-=========================== */
+/*==============================
+   THANG CHIA GAUGE
+==============================*/
 
-/* Nhiệt độ: 20 - 28 - 40 */
+.gauge-scale{
 
-.sensor-card:nth-child(1) .gauge-scale span:nth-child(2){
-
-    left:40%;
-
-}
-
-/* Độ đục: 0 - 200 - 1000 */
-
-.sensor-card:nth-child(2) .gauge-scale span:nth-child(2){
-
-    left:20%;
+    position:relative;
+    height:22px;
+    margin-bottom:12px;
 
 }
 
-/* Độ mặn: 20 - 32 - 40 */
+.gauge-scale span{
 
-.sensor-card:nth-child(3) .gauge-scale span:nth-child(2){
-
-    left:60%;
-
-}
-
-/* Risk: 0 - 50 - 100 */
-
-.sensor-card:nth-child(4) .gauge-scale span:nth-child(2){
-
-    left:50%;
+    position:absolute;
+    transform:translateX(-50%);
+    font-size:15px;
+    color:#555;
+    font-weight:600;
 
 }
+
+/*==============================
+ NHIỆT ĐỘ
+20 - 26 - 28 - 30 - 32 - 34 - 40
+==============================*/
+
+.sensor-card:nth-child(1) .gauge-scale span:nth-child(1){left:0%;}
+.sensor-card:nth-child(1) .gauge-scale span:nth-child(2){left:30%;}
+.sensor-card:nth-child(1) .gauge-scale span:nth-child(3){left:40%;}
+.sensor-card:nth-child(1) .gauge-scale span:nth-child(4){left:50%;}
+.sensor-card:nth-child(1) .gauge-scale span:nth-child(5){left:60%;}
+.sensor-card:nth-child(1) .gauge-scale span:nth-child(6){left:70%;}
+.sensor-card:nth-child(1) .gauge-scale span:nth-child(7){left:100%;}
+
+
+/*==============================
+ ĐỘ ĐỤC
+0 -250 -500 -750 -1000
+==============================*/
+
+.sensor-card:nth-child(2) .gauge-scale span:nth-child(1){left:0%;}
+.sensor-card:nth-child(2) .gauge-scale span:nth-child(2){left:25%;}
+.sensor-card:nth-child(2) .gauge-scale span:nth-child(3){left:50%;}
+.sensor-card:nth-child(2) .gauge-scale span:nth-child(4){left:75%;}
+.sensor-card:nth-child(2) .gauge-scale span:nth-child(5){left:100%;}
+
+
+/*==============================
+ ĐỘ MẶN
+20 -24 -28 -32 -35 -40
+==============================*/
+
+.sensor-card:nth-child(3) .gauge-scale span:nth-child(1){left:0%;}
+.sensor-card:nth-child(3) .gauge-scale span:nth-child(2){left:20%;}
+.sensor-card:nth-child(3) .gauge-scale span:nth-child(3){left:40%;}
+.sensor-card:nth-child(3) .gauge-scale span:nth-child(4){left:60%;}
+.sensor-card:nth-child(3) .gauge-scale span:nth-child(5){left:75%;}
+.sensor-card:nth-child(3) .gauge-scale span:nth-child(6){left:100%;}
+
+
+/*==============================
+ RISK
+0 -50 -70 -85 -100
+==============================*/
+
+.sensor-card:nth-child(4) .gauge-scale span:nth-child(1){left:0%;}
+.sensor-card:nth-child(4) .gauge-scale span:nth-child(2){left:50%;}
+.sensor-card:nth-child(4) .gauge-scale span:nth-child(3){left:70%;}
+.sensor-card:nth-child(4) .gauge-scale span:nth-child(4){left:85%;}
+.sensor-card:nth-child(4) .gauge-scale span:nth-child(5){left:100%;}
 
 .gauge-track{
 
     position:relative;
 
-    height:8px;
+    height:12px;
 
-    border-radius:20px;
+    border-radius:25px;
 
     background:#dfe6e9;
+
+    box-shadow:
+        inset 0 2px 3px rgba(255,255,255,.5),
+        0 2px 5px rgba(0,0,0,.12);
 
 }
 
@@ -635,7 +675,7 @@ hr{
 
     height:100%;
 
-    border-radius:20px;
+    border-radius:25px;
 
 }
 /* ===========================
@@ -664,84 +704,99 @@ hr{
 
 }
 
-/* ===========================
-   GAUGE ĐỘ ĐỤC
-=========================== */
+/*==================================================
+GAUGE NHIỆT ĐỘ
+==================================================*/
+
+.sensor-card:nth-child(1) .gauge-safe{
+
+    background:linear-gradient(
+        to right,
+
+        #FFD54F 0%,
+        #FFE082 20%,
+
+        #9CCC65 30%,
+        #43A047 40%,
+        #66BB6A 50%,
+
+        #FFD54F 60%,
+
+        #FB8C00 75%,
+
+        #E53935 100%
+    );
+
+}
+
+
+/*==================================================
+GAUGE ĐỘ ĐỤC
+==================================================*/
 
 .sensor-card:nth-child(2) .gauge-safe{
 
     background:linear-gradient(
         to right,
-        #0b8f2d 0%,
-        #0b8f2d 10%,
 
-        #7ed957 10%,
-        #7ed957 20%,
+        #43A047 0%,
 
-        #fdd835 20%,
-        #fdd835 40%,
+        #7CB342 20%,
 
-        #fb8c00 40%,
-        #fb8c00 80%,
+        #FFD54F 45%,
 
-        #e53935 80%,
-        #e53935 100%
+        #FB8C00 70%,
+
+        #E53935 100%
     );
 
 }
 
-/* ===========================
-   GAUGE ĐỘ MẶN
-=========================== */
+
+/*==================================================
+GAUGE ĐỘ MẶN
+==================================================*/
 
 .sensor-card:nth-child(3) .gauge-safe{
 
     background:linear-gradient(
         to right,
-        #0b8f2d 0%,
-        #0b8f2d 20%,
 
-        #7ed957 20%,
-        #7ed957 60%,
+        #E53935 0%,
 
-        #fdd835 60%,
-        #fdd835 75%,
+        #FB8C00 25%,
 
-        #fb8c00 75%,
-        #fb8c00 90%,
+        #66BB6A 45%,
 
-        #e53935 90%,
-        #e53935 100%
+        #43A047 60%,
+
+        #FFD54F 100%
     );
 
 }
 
-/* ===========================
-   GAUGE RISK
-=========================== */
+
+/*==================================================
+GAUGE RISK
+==================================================*/
 
 .sensor-card:nth-child(4) .gauge-safe{
 
     background:linear-gradient(
         to right,
-        #0b8f2d 0%,
-        #0b8f2d 20%,
 
-        #7ed957 20%,
-        #7ed957 40%,
+        #43A047 0%,
 
-        #fdd835 40%,
-        #fdd835 65%,
+        #66BB6A 35%,
 
-        #fb8c00 65%,
-        #fb8c00 82%,
+        #FFD54F 60%,
 
-        #e53935 82%,
-        #e53935 100%
+        #FB8C00 80%,
+
+        #E53935 100%
     );
 
 }
-
 .gauge-pointer{
 
     position:absolute;
