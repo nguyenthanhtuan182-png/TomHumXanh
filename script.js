@@ -136,9 +136,9 @@ function capNhatDuLieu() {
 
     doMan = Number(window.tds || 32);
 
-    if (doMan <= 0) {
+    if (doMan < 0) {
 
-        doMan = 32;
+        doMan = 0;
 
     }
 
@@ -149,7 +149,7 @@ function capNhatDuLieu() {
         doDuc + " NTU";
 
     document.getElementById("doman").innerHTML =
-        doMan.toFixed(1) + "‰";
+    doMan.toFixed(0) + " ppm";
 
     // =========================
 // NHẬN RISK TỪ ESP32
@@ -161,7 +161,7 @@ risk = Number(window.risk || 0);
 
     updatePointer("tempPointer", nhietDo, 20, 40);
     updatePointer("turbidityPointer", doDuc, 0, 1000);
-    updatePointer("salinityPointer", doMan, 20, 40);
+    updatePointer("salinityPointer", doMan, 0, 1500);
     updatePointer("riskPointer", risk, 0, 100);
 
 }
@@ -240,24 +240,24 @@ else if (doDuc > 250) {
 // ĐỘ MẶN
 // =========================
 
-if (doMan < 24) {
+if (doMan < 200) {
 
     nguyenNhan.push(
-        "Độ mặn rất thấp."
+        "Độ mặn ước lượng rất thấp."
     );
 
 }
-else if (doMan < 28) {
+else if (doMan < 600) {
 
     nguyenNhan.push(
-        "Độ mặn thấp hơn mức tối ưu."
+        "Độ mặn ước lượng thấp."
     );
 
 }
-else if (doMan > 35) {
+else if (doMan < 1100) {
 
     nguyenNhan.push(
-        "Độ mặn cao hơn mức tối ưu."
+        "Độ mặn ước lượng đang giảm."
     );
 
 }
@@ -509,7 +509,7 @@ function capNhatBang() {
             item.doDuc + " NTU";
 
         row.insertCell(3).innerHTML =
-            Number(item.doMan).toFixed(1) + "‰";
+            Number(item.doMan).toFixed(0) + " ppm";
 
         row.insertCell(4).innerHTML =
             item.risk;

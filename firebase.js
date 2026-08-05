@@ -58,13 +58,13 @@ updatePointer(
 window.tds = Number(data.tds || 0);
 
 document.getElementById("doman").innerHTML =
-    window.tds.toFixed(1) + "‰";
+    window.tds.toFixed(0) + " ppm";
 
 updatePointer(
     "salinityPointer",
     window.tds,
-    20,
-    40
+    0,
+    1500
 );
 
 //==============================
